@@ -26,22 +26,26 @@ $decoded_post_data=tryBase64Decode($_POST);
 $cookie_data=$_COOKIE;
 $decoded_cookie_data=tryBase64Decode($_COOKIE);
 
-$info['user_IP'] = $user_IP;
-$info['user_port'] = $user_port;
-$info['protocol'] = $protocol;
-$info['request_method'] = $request_method;
-$info['request_URI'] = $request_URI;
-$info['request_time'] = $request_time;
-$info['headers_data'] = $headers_data;
-$info['get_data'] = $get_data;
+$info['user_IP'] = stripStr($user_IP);
+$info['user_port'] = stripStr($user_port);
+$info['protocol'] = stripStr($protocol);
+$info['request_method'] = stripStr($request_method);
+$info['request_URI'] = stripStr($request_URI);
+$info['request_time'] = stripStr($request_time);
+
+$info['headers_data'] = stripArr($headers_data);
+
+$info['get_data'] = stripArr($get_data);
 if($decoded_get_data)
-	$info['decoded_get_data'] = $decoded_get_data;
-$info['post_data'] = $post_data;
+	$info['decoded_get_data'] = stripArr($decoded_get_data);
+
+$info['post_data'] = stripArr($post_data);
 if($decoded_post_data)
-	$info['decoded_post_data'] = $decoded_post_data;
-$info['cookie_data'] = $cookie_data;
+	$info['decoded_post_data'] = stripArr($decoded_post_data);
+
+$info['cookie_data'] = stripArr($cookie_data);
 if($decoded_cookie_data)
-	$info['decoded_cookie_data'] = $decoded_cookie_data;
+	$info['decoded_cookie_data'] = stripArr($decoded_cookie_data);
 
 saveInfo(json_encode($info),$request_time);
 

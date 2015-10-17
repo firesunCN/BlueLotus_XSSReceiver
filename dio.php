@@ -33,8 +33,24 @@ function loadInfo($filename)
 
 	if(!preg_match('/^[A-Za-z0-9\x00-\x80~!@#$%&_+-=:";\'<>,\/"\[\]\\\^\.\|\?\*\+\(\)\{\}\s]+$/',$info))
 		return false;
-	$info=json_decode($info); 
+	$info=json_decode($info, true); 
 	
 	return $info;
+}
+
+function delInfo($filename)
+{
+	$logFile = dirname( __FILE__ ).'/'.DATA_PATH.'/'.$filename.'.php';
+	return unlink($logFile);
+}
+
+function clearInfo()
+{
+	$files = glob(DATA_PATH . '/*.php'); 
+	
+	foreach ($files as $file) { 
+		unlink($file);
+	} 
+	
 }
 ?>

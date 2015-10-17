@@ -1,5 +1,6 @@
 <?php
 require_once("aes.php");
+
 function getIP()
 {
 	if(isset($_SERVER['HTTP_CLIENT_IP'])) {
@@ -34,6 +35,20 @@ if (!function_exists('getallheaders')) {
     }
 }
 
+function stripStr($str){
+	if(get_magic_quotes_gpc())
+		$str=stripslashes($str);
+	return addslashes(htmlspecialchars($str,ENT_QUOTES));
+}
+
+function stripArr($arr){
+	$new_arr=array();
+	foreach($arr as $k => $v) {
+		$new_arr[stripStr($k)] = stripStr($v);
+	}
+	return $new_arr;
+}
+
 function tryBase64Decode($arr) 
 {
 	if(isset($arr)&&count($arr)>0)
@@ -41,10 +56,8 @@ function tryBase64Decode($arr)
 		$isChanged=0;
 		
 		$new_arr = array();
-		foreach($arr as $k => $v) 
-		{
-			if(isBase64Formatted($v))
-			{
+		foreach($arr as $k => $v) {
+			if(isBase64Formatted($v)) {
 				$v=base64_decode($v);
 				$isChanged=1;
 			}
@@ -63,16 +76,9 @@ function tryBase64Decode($arr)
 function isBase64Formatted($str)
 {
 	if(preg_match('/^[A-Za-z0-9+\/=]+$/',$str))
-	{
-		$decoded_str=base64_decode($str);
-		if ($str == base64_encode($decoded_str)) 
-		{
-			if(preg_match('/^[A-Za-z0-9\x00-\x80~!@#$%&_+-=:";\'<>,\/"\[\]\\\^\.\|\?\*\+\(\)\{\}\s]+$/',$decoded_str))
-			{
+		if ($str == base64_encode(base64_decode($str))) 
+			if(preg_match('/^[A-Za-z0-9\x00-\x80~!@#$%&_+-=:";\'<>,\/"\[\]\\\^\.\|\?\*\+\(\)\{\}\s]+$/',base64_decode($str)))
 				return true;
-			}
-		}
-	}
     return false;
 }
 
@@ -85,5 +91,6 @@ function decrypt($info,$encryptPass)
 {
 	return AESDecryptCtr($info,$encryptPass);
 }
+
 
 ?>
