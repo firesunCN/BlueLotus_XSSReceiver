@@ -1,4 +1,8 @@
 <?php
+if(!defined('IN_XSS_PLATFORM')) {
+	exit('Access Denied');
+}
+
 /*Aes.php
  *Date 2009/09/04
  *Auth song_qilin

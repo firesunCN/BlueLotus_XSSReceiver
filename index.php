@@ -1,16 +1,16 @@
 <?php
-
+define("IN_XSS_PLATFORM",true);
 //sometimes we only need "referfer".
 /*
 if(count($_GET)==0&&count($_POST)==0&&count($_COOKIE)==0)
 	exit();
 */
-require_once("util.php");
+require_once("functions.php");
 require_once("dio.php");
 
 $info = array();
 
-$user_IP = getIP();
+$user_IP = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:"unknown";
 $user_port = isset($_SERVER['REMOTE_PORT'])?$_SERVER['REMOTE_PORT']:"unknown";
 $protocol = isset($_SERVER['SERVER_PROTOCOL'])?$_SERVER['SERVER_PROTOCOL']:"unknown";
 $request_method = isset($_SERVER['REQUEST_METHOD'])?$_SERVER['REQUEST_METHOD']:"unknown";
@@ -32,7 +32,6 @@ $info['protocol'] = stripStr($protocol);
 $info['request_method'] = stripStr($request_method);
 $info['request_URI'] = stripStr($request_URI);
 $info['request_time'] = stripStr($request_time);
-
 $info['headers_data'] = stripArr($headers_data);
 
 $info['get_data'] = stripArr($get_data);
@@ -47,6 +46,7 @@ $info['cookie_data'] = stripArr($cookie_data);
 if($decoded_cookie_data)
 	$info['decoded_cookie_data'] = stripArr($decoded_cookie_data);
 
-saveInfo(json_encode($info),$request_time);
+$info['keepsession']=isKeepSession($info)?true:false;
 
+saveInfo(json_encode($info),$request_time);
 ?>

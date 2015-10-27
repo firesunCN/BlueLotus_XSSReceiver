@@ -1,0 +1,49 @@
+diff --git a/jqxgrid.js b/jqxgrid.js
+index 97dd39c..605cf30 100644
+--- a/jqxgrid.js
++++ b/jqxgrid.js
+@@ -288,9 +288,9 @@ License: http://jqwidgets.com/license/
+                 return
+             }
+             if (h.autorowheight && !h.autoheight && !h.pageable) {
+-                throw new Error('jqxGrid: "autorowheight" requires setting the "autoheight" or "pageable" property to true!');
+-                h.host.remove();
+-                return
++                //throw new Error('jqxGrid: "autorowheight" requires setting the "autoheight" or "pageable" property to true!');
++                //h.host.remove();
++                //return
+             }
+             if (h.virtualmode && h.rendergridrows == null) {
+                 throw new Error('jqxGrid: "virtualmode" requires setting the "rendergridrows"!');
+@@ -6038,6 +6042,13 @@ License: http://jqwidgets.com/license/
+                                     })
+                                 }
+                             }
++							else{
++								var o = n - e;
++                                var g = this.vScrollInstance.max;
++                                this.vScrollBar.jqxScrollBar({
++                                    max: o
++                                });
++							}
+                         } else {
+                             this.vScrollBar.jqxScrollBar({
+                                 value: 0,
+@@ -6584,7 +6595,7 @@ License: http://jqwidgets.com/license/
+                         if (ad.group != undefined && this._rendergroup) {
+                             this._rendergroup(P, k, ad, am, r, ab, J)
+                         }
+-                        if (this.autorowheight && (this.autoheight || this.pageable)) {
++                        if (this.autorowheight) {// && (this.autoheight || this.pageable)) {
+                             var O = this.rowsheight;
+                             for (var V = d; V < aa; V++) {
+                                 if (this.editable && this.editcell && this.editcell.column == this.columns.records[V].datafield && this.editcell.row == this.getboundindex(ad)) {
+@@ -6661,7 +6672,7 @@ License: http://jqwidgets.com/license/
+                     }
+                 }
+             }
+-            if ((this.autoheight || this.pageable) && this.autorowheight) {
++            if (this.autorowheight) {//(this.autoheight || this.pageable) && 
+                 this._pagescache = new Array();
+                 var W = 0;
+                 var g = 0;

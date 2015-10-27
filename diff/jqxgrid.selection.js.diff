@@ -1,0 +1,30 @@
+diff --git a/jqxgrid.selection.js b/jqxgrid.selection.js
+index 2fe844f..3cda160 100644
+--- a/jqxgrid.selection.js
++++ b/jqxgrid.selection.js
+@@ -1398,16 +1398,17 @@ License: http://jqwidgets.com/license/
+             if (A.altKey) {
+                 return true
+             }
++			/*
+             if (A.ctrlKey || A.metaKey) {
+                 if (this.clipboard) {
+                     var b = String.fromCharCode(H).toLowerCase();
+                     if (this.clipboardbegin) {
+                         var j = null;
+                         if (b == "c") {
+                             j = this.clipboardbegin("copy", this.copyselection())
+                         } else {
+                             if (b == "x") {
+                                 j = this.clipboardbegin("cut", this.copyselection())
+                             } else {
+                                 if (b == "v") {
+                                     j = this.clipboardbegin("paste")
+@@ -1488,6 +1489,7 @@ License: http://jqwidgets.com/license/
+                     }
+                 }
+             }
++			*/
+             var n = Math.round(t._gettableheight());
+             var y = Math.round(n / t.rowsheight);
+             var f = t.getdatainformation();

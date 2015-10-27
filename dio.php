@@ -1,6 +1,9 @@
 <?php
+if(!defined('IN_XSS_PLATFORM')) {
+	exit('Access Denied');
+}
 require_once("config.php");
-require_once("util.php");
+require_once("functions.php");
 
 function saveInfo($info,$filename)
 {
@@ -35,6 +38,17 @@ function loadInfo($filename)
 		return false;
 	$info=json_decode($info, true); 
 	
+	
+	$isChange=false;
+	if(!isset($info['location']))
+	{
+		$info['location']=convertip($info['user_IP'],IPDATA_PATH);
+		$isChange=true;
+	}
+		
+	if($isChange)
+		saveInfo(json_encode($info),$filename);
+	
 	return $info;
 }
 
@@ -51,6 +65,6 @@ function clearInfo()
 	foreach ($files as $file) { 
 		unlink($file);
 	} 
-	
+	return true;
 }
 ?>

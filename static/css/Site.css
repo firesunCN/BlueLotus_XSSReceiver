@@ -1,0 +1,200 @@
+﻿html, body, div, span, iframe,
+h1, h2, h3, h4, h5, h6, p, a, img, dl, dt, dd, ol, ul, li,
+table, tfoot, thead, tr, th, td,
+article, aside, canvas, details, footer, header, section {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+}
+
+
+
+/* HTML5 display-role reset for older browsers */
+body {
+	line-height: 1;
+	font-size: 12px;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+html, body {
+	height: 100%;
+	font-family: 'Microsoft YaHei','Open Sans',arial,sans-serif;
+}
+
+html,
+body,
+.container-fluid,
+.row,
+.column{
+	height: 100%;
+}
+
+/* font */
+@font-face {
+	font-family: 'icomoon';
+	src:url('Fonts/icomoon.eot?c8m22a');
+	src:url('Fonts/icomoon.eot?#iefixc8m22a') format('embedded-opentype'),
+		url('Fonts/icomoon.woff?c8m22a') format('woff'),
+		url('Fonts/icomoon.ttf?c8m22a') format('truetype'),
+		url('Fonts/icomoon.svg?c8m22a#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-info:before {
+	content: "\e600";
+}
+.icon-faves:before {
+	content: "\e601";
+}
+.icon-star-empty:before {
+	content: "\e602";
+}
+.icon-chart-column:before {
+	content: "\e603";
+}
+.icon-mobile:before {
+	content: "\e604";
+}
+
+.icon {
+    margin-right: 0.917em;
+}
+
+/* Bootstrap overrides*/
+.row,
+.container-fluid {
+	padding: 0;
+	margin: 0;
+}
+
+.column{
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.windows {
+	-moz-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Nav section */
+#nav-section{
+	background-color: #35373d;
+	width: 220px;
+	float: left;
+	height: 100%;
+}
+
+#nav-section li {
+    border-bottom: 1px solid #4a4b51;
+    white-space:nowrap;
+    font-size: 11px;
+    line-height: 11px;
+}
+
+#nav-section li a {
+    color: #b8bbc2;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-left: 2em;
+    font-size: 14px;
+    padding: 2em 1.2em;
+}
+
+#nav-section li:hover {
+    background-color: #212329;
+}
+
+#nav-section li.active {
+    background-color: #0d1016;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+    background: none;
+}
+
+#dash-logo {
+    color: #fff;
+    background-color: #1996e4;
+    text-align: center;
+}
+
+#sidebar-nav{
+	padding: 0;
+}
+
+#rights {
+    color: #848690;
+    font-size: 10px;
+    position: absolute;
+    bottom: 10px;
+}
+
+/* Toggle button */
+#toggle-button {
+    margin-top: 27px;
+    border: none;
+}
+
+#toggle-button:hover,
+#toggle-button:focus {
+    background-color: transparent;
+}
+
+#toggle-button .icon-bar {
+    background-color: #fff;
+}
+
+/* Main section */
+.main-section {
+    float: none;
+    width: auto;
+    overflow: hidden;
+    height: 100%;
+    background-color: #eee;
+}
+
+#dash-logo,
+.main-section-header > h2{
+    font-size: 18px;
+    text-transform: uppercase;
+    line-height: 26px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.main-section-header > h2 {
+    padding-left: 1.667em;
+    white-space: nowrap;
+}
+
+.main-section-header {
+    height: auto;
+    border-bottom: 1px solid #ededee;
+    -moz-box-shadow: 1px 0 4px #ededee;
+    -webkit-box-shadow: 1px 0 4px #ededee;
+    box-shadow: 1px 0 4px #ededee;
+    background-color: #fff;
+}
