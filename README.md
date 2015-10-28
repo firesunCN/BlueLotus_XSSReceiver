@@ -1,27 +1,30 @@
 # XSS数据接收平台（无SQL版）
 ## 使用说明
-无需数据库，无需其他组件支持，可直接在php虚拟空间使用，使用步骤：
+本平台设计理念，基本无需配置即可使用，故设计为无需数据库，无需其他组件支持，可直接在php虚拟空间使用，使用步骤：
 
 * 上传所有文件至空间根目录
 * 修改config.php，指定数据存放目录，数据是否启用AES加密及加密密码
 ```php
+define('PASS', '2a05218c7aa0a6dbd370985d984627b8');
 define('DATA_PATH', 'data');
 define('ENABLE_ENCRYPT', true);
 define('ENCRYPT_PASS', "bluelotus");
 ```
+可用php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"生成密码hash
 * 赋予`DATA_PATH`目录写权限
 * 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
-* 可访问admin.php查看记录的数据
+* 可访问login.php登录查看记录的数据
 
 ## 目前支持功能
 * 自动判断携带数据是否base64编码，可自动解码
 * 记录所有可记录的数据，并可根据ip判断位置，根据useragent判断操作系统与浏览器
 * 新消息提醒，仿QQ邮箱新消息提醒框，可实时获得数据
 * 支持简单的查找功能
+* 除了style允许unsafe-inline外启用CSP
+* 挑战应答式的登录校验，session绑定ip与useragent
 
 ## TODO
 * keepsession
-* 认证
 * 完全启用CSP
 * 我的js
 * js模板

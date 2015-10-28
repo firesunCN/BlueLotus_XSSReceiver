@@ -8,6 +8,7 @@ require("auth.php");
 <head>
 <meta charset="utf-8" />
     
+	<title>控制面板</title>
 	<link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/Site.css" type="text/css" />
 	<link rel="stylesheet" href="static/css/notification.css" type="text/css" />
