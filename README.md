@@ -2,6 +2,8 @@
 ## 使用说明
 本平台设计理念，基本无需配置即可使用，故设计为无需数据库，无需其他组件支持，可直接在php虚拟空间使用，使用步骤：
 
+![](./guide/mainpanel.png)
+
 * 上传所有文件至空间根目录
 * 修改config.php，指定数据存放目录，数据是否启用AES加密及加密密码
 ```php
@@ -15,10 +17,22 @@ define('ENCRYPT_PASS', "bluelotus");
 * 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
 * 可访问login.php登录查看记录的数据
 
+![](./guide/login.png)
+
 ## 目前支持功能
 * 自动判断携带数据是否base64编码，可自动解码
+
+![](./guide/base64.png)
+
 * 记录所有可记录的数据，并可根据ip判断位置，根据useragent判断操作系统与浏览器
+
+![](./guide/info.png)
+
 * 新消息提醒，仿QQ邮箱新消息提醒框，可实时获得数据
+
+![](./guide/newmessage.png)
+
+
 * 支持简单的查找功能
 * 除了style允许unsafe-inline外启用CSP
 * 挑战应答式的登录校验，session绑定ip与useragent
