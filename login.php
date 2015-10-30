@@ -5,18 +5,20 @@ header("Content-Security-Policy: default-src 'self'; object-src 'none'; frame-sr
 header("X-Content-Security-Policy: default-src 'self'; object-src 'none'; frame-src 'none'");
 header("X-WebKit-CSP: default-src 'self'; object-src 'none'; frame-src 'none'");
 
+//设置httponly
 ini_set("session.cookie_httponly", 1); 
 session_start();
 require_once("config.php");
 require_once("functions.php");
 
-
+//判断是否登陆
 if(isset($_SESSION['isLogin']) && $_SESSION['isLogin']===true)
 {
 	header("Location: admin.php");
 	exit();
 }
 
+//判断ip是否在封禁列表中
 $forbiddenIPList=loadForbiddenIPList();
 $ip=$_SERVER['REMOTE_ADDR'];
 if(!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip]<3)
@@ -53,7 +55,8 @@ function loadForbiddenIPList()
 	$logfile = DATA_PATH . '/forbiddenIPList.dat';
 	!file_exists( $logfile ) && @touch( $logfile );
 	$str = file_get_contents( $logfile );
-	$str =decrypt($str,ENCRYPT_PASS);
+	if(ENABLE_ENCRYPT)	
+		$str =decrypt($str,ENCRYPT_PASS);
 	if($str!='')
 	{
 		$result=json_decode($str,true);
@@ -70,7 +73,10 @@ function saveForbiddenIPList($forbiddenIPList)
 {
 	$logfile = DATA_PATH . '/forbiddenIPList.dat';
 	!file_exists( $logfile ) && @touch( $logfile );
-	@file_put_contents($logfile, encrypt(json_encode($forbiddenIPList),ENCRYPT_PASS));
+	$str=json_encode($forbiddenIPList);
+	if(ENABLE_ENCRYPT)	
+		$str = encrypt($str,ENCRYPT_PASS);
+	@file_put_contents($logfile, $str);
 }
 
 /*
@@ -81,6 +87,7 @@ function checkPassword($p)
 {
 	if(isset($_SESSION['firesunCheck'])&&isset($_POST['firesunCheck'])&&$_SESSION['firesunCheck']!=""&&$_POST['firesunCheck']===$_SESSION['firesunCheck'])
 	{
+		//改了这个盐记得改login.js里的，两个要一致
 		$salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";
 		$key=PASS;
 		$key=md5($salt.$key.$_SESSION['firesunCheck'].$salt);
@@ -92,6 +99,7 @@ function checkPassword($p)
 	return false;
 }
 
+//生成挑战应答的随机值
 function generate_password( $length = 32 ) {
 	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";  
 	$password = "";  

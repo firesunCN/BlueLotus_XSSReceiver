@@ -5,6 +5,7 @@ if(!defined('IN_XSS_PLATFORM')) {
 require_once("config.php");
 require_once("functions.php");
 
+//对记录的读写操作，无数据库，采用读写文件的方式，文件名即请求时的时间戳，同时也是记录的id
 function saveInfo($info,$filename)
 {
 	$logFile = dirname( __FILE__ ).'/'.DATA_PATH.'/'.$filename.'.php';

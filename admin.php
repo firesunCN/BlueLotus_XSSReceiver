@@ -58,22 +58,29 @@ require("auth.php");
                     <ul id="Tab" class="nav">
                         <li class="active">
                             <a href="#panel" data-toggle="tab">
-                                <span class="icon icon-chart-column"></span>接收面板</a>
+                                <span class="icon icon-panel"></span>接收面板</a>
                         </li>
                         <li>
                             <a href="#js" data-toggle="tab">
-                                <span class="icon icon-star-empty"></span>我的JS</a>
+                                <span class="icon icon-my-js"></span>我的JS</a>
                         </li>
                         <li>
                             <a href="#template" data-toggle="tab">
-                                <span class="icon icon-faves"></span>公共模板</a>
+                                <span class="icon icon-template"></span>公共模板</a>
                         </li>
                         <li>
                             <a href="#aboutus" data-toggle="tab">
                                 <span class="icon icon-info"></span>关于</a>
                         </li>
+						
+						<li id="logout">
+                            <a href="#logout"  >
+                               <span class="icon icon-logout"></span>注销</a>
+                        </li>
+										
+							
                     </ul>
-                    <span id="rights">Copyright © 2015-2016 Powered by Firesun</span>
+                    <span id="rights">Copyright © 2015-2016<br>Powered by <a href="https://github.com/firesunCN" target="_blank">Firesun</a></span>
                 </div>
             </div>
 			
@@ -107,18 +114,19 @@ require("auth.php");
 						<h2 class="eam-efficiency col-xs-3">关于</h2>
 						<div style="clear:both;"></div>
 					</div>
-					<div id="about_detail"></div>
+					<div id="about_detail">
+					</div>
 				</div>
+				
+				
+				
 			</div>
         </div>
     </div>
 	
-	
 	<div id="notifications-bottom-right"></div>
 
 	<div style="display: none;">
-		
-		
 		<div id="searchWindow" class="windows">
 				<div>
 					查找记录</div>
@@ -157,6 +165,24 @@ require("auth.php");
                     </div>
                 </div>
 		</div>
+		
+		<div id="logoutConfirmWindow"  class="windows">
+                <div>
+                    <img width="14" height="14" src="static/images/help.png" alt="" />
+                    确认</div>
+                <div>
+                    <div style="margin: 5px;">
+                        您确认注销吗？
+                    </div>
+                    <div>
+                    <div style="float: right; margin-top: 15px;">
+                        <input type="button" id="logoutConfirm_ok" value="确认" style="margin-right: 10px" />
+                        <input type="button" id="logoutConfirm_cancel" value="取消" />
+                    </div>
+                    </div>
+                </div>
+		</div>
+		
 		<div id="clearConfirmWindow"  class="windows">
                 <div>
                     <img width="14" height="14" src="static/images/help.png" alt="" />

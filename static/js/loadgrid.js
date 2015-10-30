@@ -7,6 +7,7 @@ var interval = 1000; //向服务器获取记录的时间间隔，同时也是aja
 $(document).ready(function() {
     var self = this;
 
+	//数据源与datafields
     var source = {
         datatype: "json",
         datafields: [{
@@ -76,6 +77,7 @@ $(document).ready(function() {
         root: 'data',
     };
 
+	//从接口获得数据后的处理，格式化时间与根据useragent判断客户端
     var dataAdapter = new $.jqx.dataAdapter(source, {
         downloadComplete: function(data, status, xhr) {
             if (status == "success") {
@@ -104,6 +106,7 @@ $(document).ready(function() {
         },
     });
 
+	//每行detail信息初始化
     var initrowdetails = function(index, parentElement, gridElement, datarecord) {
         var tabsdiv = null;
         var information = null;
@@ -119,7 +122,8 @@ $(document).ready(function() {
             post_grid = tabsdiv.find('.post_grid');
             cookie_grid = tabsdiv.find('.cookie_grid');
             headers_grid = tabsdiv.find('.headers_grid');
-            //datarecord.client=datarecord.headers_data["User-Agent"]?get_client_info(datarecord.headers_data["User-Agent"]):"未知";
+            
+			//GET表
             var get_data = new Array();
             for (key in datarecord.get_data) {
                 var get_data_item = new Array();
@@ -193,6 +197,7 @@ $(document).ready(function() {
                 ]
             });
 
+			//POST表
             var post_data = new Array();
             for (key in datarecord.post_data) {
                 var post_data_item = new Array();
@@ -269,6 +274,7 @@ $(document).ready(function() {
                 ]
             });
 
+			//COOKIE表
             var cookie_data = new Array();
             for (key in datarecord.cookie_data) {
                 var cookie_data_item = new Array();
@@ -341,6 +347,7 @@ $(document).ready(function() {
                 ]
             });
 
+			//HTTP Headers表
             var headers_data = new Array();
             for (key in datarecord.headers_data) {
                 var headers_data_item = new Array();
@@ -392,6 +399,8 @@ $(document).ready(function() {
                 },
                 ]
             });
+			
+			//其他信息
             var container = $('<div style="margin: 25px;"></div>');
 			container.appendTo($(information));
             var leftcolumn = $('<div style="float: left; width: 45%;"></div>');
@@ -419,6 +428,7 @@ $(document).ready(function() {
             $(rightcolumn).append(uri_item);
             $(rightcolumn).append(client_item);
 
+			//tab大小调整
             $(tabsdiv).jqxTabs({
                 width: '95%',
                 height: '100%'
@@ -426,16 +436,18 @@ $(document).ready(function() {
         }
     }
 
+	//主面板初始化
     $("#panelGrid").jqxGrid({
 
         pageable: true,
+		//如果需要autoresizecolumn，可以在这开启
         ready: function() {
             //$('#panelGrid').jqxGrid('autoresizecolumn', 'request_date_and_time_string'); 
             //$('#panelGrid').jqxGrid('autoresizecolumn', 'data_type'); 
             //$('#panelGrid').jqxGrid('autoresizecolumn', 'user_IP');
         },
+		//最底下的状态栏初始化
         pagerrenderer: function() {
-
             var container = $("<div style='overflow: hidden; position: relative; '></div>");
             var deleteButton = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='static/images/delete.png'/><span style='margin-left: 4px; position: relative; top: 3px;'>删除</span></div>");
             var clearButton = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='static/images/clear.png'/><span style='margin-left: 4px; position: relative; top: 3px;'>清空</span></div>");
@@ -468,20 +480,15 @@ $(document).ready(function() {
 
             });
 
-            // reload grid data.
             clearButton.click(function(event) {
                 $('#clearConfirmWindow').jqxWindow('open');
                 $("#clearConfirmWindow").addClass('animated');
-                //$("#panelGrid").jqxGrid({
-                //	source: getAdapter()
-                //});
             });
+			
             // search for a record.
             searchButton.click(function(event) {
-                //var offset = $("#panelGrid").offset();
                 $("#searchWindow").jqxWindow('open');
                 $("#searchWindow").addClass('animated');
-                //$("#jqxwindow").jqxWindow('move', offset.left + 30, offset.top + 30);
             });
 
             var pageElementsContainer = $("<div style='overflow: hidden;float: right;position: relative;margin: 5.5px; '></div>");
@@ -524,8 +531,6 @@ $(document).ready(function() {
             });
             return container;
         },
-
-        //selectionmode: 'multiplerowsextended',
         scrollmode: 'logical',
         sortable: true,
         pagesize: 25,
@@ -677,6 +682,32 @@ $(document).ready(function() {
         }
     });
 
+	//注销确认窗口
+    $('#logoutConfirmWindow').jqxWindow({
+        height: 100,
+        width: 270,
+        resizable: false,
+        okButton: $('#logoutConfirm_ok'),
+        cancelButton: $('#logoutConfirm_cancel'),
+        autoOpen: false,
+    });
+
+    $('#logoutConfirm_ok').jqxButton({
+        width: '65px'
+    });
+    $('#logoutConfirm_cancel').jqxButton({
+        width: '65px'
+    });
+
+    $('#logoutConfirmWindow').on('close',
+		function(event) {
+			if (event.args.dialogResult.OK) {
+				window.location.href = "logout.php";
+			}
+    });
+	
+	
+	
     $('#failedWindow').jqxWindow({
         height: 100,
         width: 270,
@@ -697,6 +728,7 @@ $(document).ready(function() {
         width: 210,
         height: 180
     });
+	
     // create find and clear buttons.
     $("#findButton").jqxButton({
         width: 70
@@ -704,6 +736,7 @@ $(document).ready(function() {
     $("#clearButton").jqxButton({
         width: 70
     });
+	
     // find records that match a criteria.
     $("#dropdownlist").jqxDropDownList({
         autoDropDownHeight: true,
@@ -768,6 +801,12 @@ $(document).ready(function() {
         //$('#panelGrid').jqxGrid('autoresizecolumn', 'user_IP');
     });
 
+	$("#logout").click(function() {
+        $('#logoutConfirmWindow').jqxWindow('open');
+        $("#logoutConfirmWindow").addClass('animated');
+         
+    });
+	
     //定时判断是否有新的记录
     checkNewMessages();
     setIntervalID = setInterval(checkNewMessages, interval);

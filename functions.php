@@ -4,6 +4,7 @@ if(!defined('IN_XSS_PLATFORM')) {
 }
 require_once("aes.php");
 
+//nginx无getallheaders函数
 if (!function_exists('getallheaders')) {
     function getallheaders() {
         foreach ($_SERVER as $name => $value) {
@@ -15,7 +16,7 @@ if (!function_exists('getallheaders')) {
     }
 }
 
-
+//判断该记录是否
 function isKeepSession($info){
 	$keepsession=false;
 	foreach($info['cookie_data'] as $k => $v) {
@@ -33,8 +34,7 @@ function isKeepSession($info){
 	return $keepsession;
 }
 
-
-
+//xss过滤
 function stripStr($str){
 	if(get_magic_quotes_gpc())
 		$str=stripslashes($str);
@@ -49,6 +49,7 @@ function stripArr($arr){
 	return $new_arr;
 }
 
+//尝试base64解码
 function tryBase64Decode($arr) 
 {
 	if(isset($arr)&&count($arr)>0)
@@ -74,6 +75,7 @@ function tryBase64Decode($arr)
 		return false;
 }
 
+//判断string是否为base64编码（判断方法：解码后为可见字符串）
 function isBase64Formatted($str)
 {
 	if(preg_match('/^[A-Za-z0-9+\/=]+$/',$str))
@@ -93,6 +95,7 @@ function decrypt($info,$encryptPass)
 	return AESDecryptCtr($info,$encryptPass);
 }
 
+//基于Discuz X3.1 function_misc.php
 function convertip($ip, $ipdatafile) {
 	$ipaddr = '未知';
 	if(preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $ip)) {
