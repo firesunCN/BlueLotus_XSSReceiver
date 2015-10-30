@@ -12,10 +12,10 @@ define('DATA_PATH', 'data');
 define('ENABLE_ENCRYPT', true);
 define('ENCRYPT_PASS', "bluelotus");
 ```
-可用php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"生成密码hash
+可用`php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"`生成密码hash
 * 赋予`DATA_PATH`目录写权限
 * 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
-* 可访问login.php登录查看记录的数据
+* 可访问login.php登录查看记录的数据，初始密码bluelotus
 
 ![](./guide/login.png)
 
@@ -36,6 +36,7 @@ define('ENCRYPT_PASS', "bluelotus");
 * 支持简单的查找功能
 * 除了style允许unsafe-inline外启用CSP
 * 挑战应答式的登录校验，session绑定ip与useragent
+* 密码输错三次封IP，误封请删除`DATA_PATH`/forbiddenIPList.dat文件
 
 ## TODO
 * keepsession
@@ -50,4 +51,4 @@ define('ENCRYPT_PASS', "bluelotus");
 * 为实现jqxgrid不支持的功能，如固定表格高度实现row高度自动调节，修改了jQWidgets部分代码，具体修改部分可查看diff文件夹
 * 为方便开发与调试，未合并压缩js与css，待最终版发布后合并
 * 使用纯真ip库的函数基于Discuz X3.1 function_misc.php上修改而来, 判断客户端操作系统与浏览器的脚本基于原作者@author  Jea杨写的php版本修改而来，后台整体布局借鉴Kendo UI 的demo NORTHWIND DASH
-* `本工具仅允许使用在CTF比赛等学习、研究场景，严禁用于非法用途`
+* Warning: 本工具仅允许使用在CTF比赛等学习、研究场景，严禁用于非法用途
