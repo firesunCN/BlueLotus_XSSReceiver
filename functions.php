@@ -19,17 +19,29 @@ if (!function_exists('getallheaders')) {
 //判断该记录是否
 function isKeepSession($info){
 	$keepsession=false;
-	foreach($info['cookie_data'] as $k => $v) {
-		if($k==="keepsession")
-			$keepsession=($v==="1"?true:false);
-	}
-	foreach($info['post_data'] as $k => $v) {
-		if($k==="keepsession")
-			$keepsession=($v==="1"?true:false);
-	}
+	
 	foreach($info['get_data'] as $k => $v) {
 		if($k==="keepsession")
+		{
 			$keepsession=($v==="1"?true:false);
+			return $keepsession;
+		}
+	}
+	
+	foreach($info['post_data'] as $k => $v) {
+		if($k==="keepsession")
+		{
+			$keepsession=($v==="1"?true:false);
+			return $keepsession;
+		}
+	}
+	
+	foreach($info['cookie_data'] as $k => $v) {
+		if($k==="keepsession")
+		{
+			$keepsession=($v==="1"?true:false);
+			return $keepsession;
+		}	
 	}
 	return $keepsession;
 }

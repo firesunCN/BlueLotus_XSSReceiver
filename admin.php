@@ -80,7 +80,7 @@ require("auth.php");
 										
 							
                     </ul>
-                    <span id="rights">Copyright © 2015-2016<br>Powered by <a href="https://github.com/firesunCN" target="_blank">Firesun</a></span>
+                    <span id="rights">Copyright © 2015-2016<br>Powered by <a href="http://firesun.me" target="_blank">Firesun</a></span>
                 </div>
             </div>
 			

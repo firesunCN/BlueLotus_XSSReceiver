@@ -23,4 +23,5 @@ if(!(isset($_SESSION['isLogin']) && $_SESSION['isLogin']===true && isset($_SESSI
 header("Content-Security-Policy: default-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; frame-src 'none'");
 header("X-Content-Security-Policy: default-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; frame-src 'none'");
 header("X-WebKit-CSP: default-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; frame-src 'none'");
+
 ?>

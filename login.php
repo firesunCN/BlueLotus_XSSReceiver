@@ -23,7 +23,7 @@ $forbiddenIPList=loadForbiddenIPList();
 $ip=$_SERVER['REMOTE_ADDR'];
 if(!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip]<3)
 {
-	if(isset($_POST['password']) && $_POST['password']!='' )
+	if(isset($_POST['password']) && $_POST['password']!="")
 	{
 		if(checkPassword($_POST['password']))
 		{
@@ -85,7 +85,7 @@ php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='bluelotus';$key=md5($salt
 */
 function checkPassword($p)
 {
-	if(isset($_SESSION['firesunCheck'])&&isset($_POST['firesunCheck'])&&$_SESSION['firesunCheck']!=""&&$_POST['firesunCheck']===$_SESSION['firesunCheck'])
+	if(isset($_POST['firesunCheck']) && isset($_SESSION['firesunCheck']) && $_SESSION['firesunCheck']!="" && $_POST['firesunCheck']===$_SESSION['firesunCheck'])
 	{
 		//改了这个盐记得改login.js里的，两个要一致
 		$salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";

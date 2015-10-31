@@ -38,8 +38,16 @@ define('ENCRYPT_PASS', "bluelotus");
 * 挑战应答式的登录校验，session绑定ip与useragent
 * 密码输错三次封IP，误封请删除`DATA_PATH`/forbiddenIPList.dat文件
 
+## keepsession功能
+* 需要在config.php开启
+* 如果请求的get或post或cookie中带有keepsession=1，则这条记录会被keepsession
+* 请设置脚本或者网站监控定期访问keepsession.php
+* 请将cookie存在cookie参数，url存在location参数（传递方法可get可post可cookie），如`index.php?keepsession=1&cookie=aaa&location=bbb`,keepsession.php将会定期使用cookie aaa去访问bbb
+* cookie和location参数支持base64编码，keepsession.php会自动判断，自动解码
+* 如果不设置location，将会使用HTTP Referer作为url
+* keepsession.php使用`flock($pid, LOCK_EX|LOCK_NB)`实现单例运行（由于windows下不支持无阻塞锁定，所以最好删除keepsession.php里的`set_time_limit(0)`），可自行加上sleep防止keepsession.php被恶意频繁访问
+
 ## TODO
-* keepsession
 * 完全启用CSP
 * 我的js
 * js模板
@@ -52,3 +60,9 @@ define('ENCRYPT_PASS', "bluelotus");
 * 为方便开发与调试，未合并压缩js与css，待最终版发布后合并
 * 使用纯真ip库的函数基于Discuz X3.1 function_misc.php上修改而来, 判断客户端操作系统与浏览器的脚本基于原作者@author  Jea杨写的php版本修改而来，后台整体布局借鉴Kendo UI 的demo NORTHWIND DASH
 * Warning: 本工具仅允许使用在CTF比赛等学习、研究场景，严禁用于非法用途
+
+## 意见与建议
+
+欢迎大家在体验过程中提出各种宝贵的意见和建议，以及各种bug！
+
+反馈邮箱firesun.cn`at`gmail.com

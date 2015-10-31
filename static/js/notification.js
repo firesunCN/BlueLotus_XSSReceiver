@@ -9,7 +9,6 @@ function readNotification(){
 	$(this).parent().fadeOut(200);
 	//reload data
 	$('#panelGrid').jqxGrid('updatebounddata');
-	//$("#panelGrid").jqxGrid({ source: getAdapter() });
 
 }
 
@@ -23,7 +22,7 @@ function showNotification(newUnreadNum,lastedID,interval){
 		{
 			
 			if(document.title)
-				document.title='【收到'+unreadNum+"份消息】"+document.title;
+				document.title='【收到'+unreadNum+"封消息】"+oldTitle;
 
 			var notificationHTML='<div id="webpushtipcontainer" class="webpushtipoutter" ><div class="webpushtipinner"><div id="webpushtip1" style="visibility: visible; bottom: 0px;" class="newmailNotifyItem notify_mail"><div class="newmailNotify" id="newNotification"><a nocheck="true" id="webpushtip1close" class="notify_close"title="关闭"></a><div class="notify_type"><span></span><label><em id="unreadNum">1</em></label></div><div class="notify_content"><p class="notify_location">未知</p><p class="notify_title">0.0.0.0</p><p class="notify_digest">GET:0个 POST:0个 Cookie:0个</p></div></div></div></div></div>';
 			$("#webpushtipcontainer").remove();
