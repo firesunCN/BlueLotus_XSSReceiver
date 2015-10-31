@@ -31,17 +31,21 @@ if(KEEP_SESSION)
 				if(isset($info['headers_data']['User-Agent']))
 					$useragent=$info['headers_data']['User-Agent'];
 
+				$ip=$info['user_IP'];
 				if($url!="" && $cookie!="")
 				{
 					$ch = curl_init(); 
 					$header[]= 'User-Agent: '.$useragent;
 					$header[]= 'Cookie: '.$cookie;
+					$header[]= 'X-Forwarded-For: '.$ip;
+					
 					curl_setopt($ch,CURLOPT_URL,$url);
 					curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
 					curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
 					curl_setopt($ch, CURLOPT_TIMEOUT,10);  
 					//https不校验证书，按需开启吧
 					//curl_setopt ( $curl_handle, CURLOPT_SSL_VERIFYHOST, 0 );
+					
 					curl_exec($ch);
 					curl_close($ch);
 				}	
