@@ -1,5 +1,5 @@
 //全局变量
-var urlbase = "../../api.php"; //api.php基地址
+var urlbase = "./api.php"; //api.php基地址
 var messageList = null; //记录缓存，用于判断是否有新的记录
 var setIntervalID = null; //定时器ID，用于网络自适应，调节timeout
 var interval = 1000; //向服务器获取记录的时间间隔，同时也是ajax timeout时间
