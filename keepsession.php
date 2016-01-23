@@ -21,7 +21,7 @@ if(KEEP_SESSION)
 		$files = glob(DATA_PATH . '/*.php');
 		foreach ($files as $file) {
 			$filename=basename($file,".php");
-			$info=loadInfo($filename);
+			$info=load_xss_record($filename);
 			if($info['keepsession']===true)
 			{
 				$url=getLocation($info);

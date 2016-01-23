@@ -1,8 +1,8 @@
 $(document).ready(function() {
-	
+	$("#submit").removeAttr("disabled");
 	$("#submit").click(function(event) {
-		if($("#password").val()=="")
-			return true;
+		if($("#password").val()==="")
+			return false;
 		var salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";
         $("#password").val(md5(salt + $("#password").val() + salt));
 		$("#password").val(md5(salt + $("#password").val() + salt));
@@ -10,6 +10,7 @@ $(document).ready(function() {
 		$("#password").val(md5(salt + $("#password").val() + $("#firesunCheck").val() + salt));
 		$("#password").val(md5(salt + $("#password").val() + $("#firesunCheck").val() + salt));
 		$("#password").val(md5(salt + $("#password").val() + $("#firesunCheck").val() + salt));
+		return true;
 	});
 	$("#note").click(function(event) {
         alert("神仙难救");
@@ -120,7 +121,6 @@ function ii(a, b, c, d, x, s, t) {
 }
 
 function md51(s) {
-    txt = "";
     var n = s.length,
     state = [1732584193, -271733879, -1732584194, 271733878],
     i;

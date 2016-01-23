@@ -7,9 +7,11 @@ function readNotification(){
 	if(document.title)
 		document.title=oldTitle;
 	$(this).parent().fadeOut(200);
-	//reload data
+	
+	$("#xss_panel_tab").tab('show');
+	//重新载入数据
 	$('#panelGrid').jqxGrid('updatebounddata');
-
+	
 }
 
 function showNotification(newUnreadNum,lastedID,interval){

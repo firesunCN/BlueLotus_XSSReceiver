@@ -2,83 +2,289 @@
 var urlbase = "./api.php"; //api.php基地址
 var messageList = null; //记录缓存，用于判断是否有新的记录
 var setIntervalID = null; //定时器ID，用于网络自适应，调节timeout
-var interval = 1000; //向服务器获取记录的时间间隔，同时也是ajax timeout时间
+var interval = 2000; //向服务器获取记录的时间间隔，同时也是ajax timeout时间
 
 $(document).ready(function() {
     var self = this;
+    var base_height = $("#nav-section").height() - $("#dash-logo").outerHeight(true);
+    //////////////////////
+    //所有提示窗体初始化//
+    //////////////////////
 
-	//数据源与datafields
-    var source = {
+    //删除记录确认窗口
+    $('#deleteConfirmWindow').jqxWindow({
+        height: 100,
+        width: 270,
+        resizable: false,
+        isModal: true,
+        modalOpacity: 0.3,
+        okButton: $('#deleteConfirm_ok'),
+        cancelButton: $('#deleteConfirm_cancel'),
+        autoOpen: false,
+    });
+    $('#deleteConfirm_ok').jqxButton({
+        width: '65px'
+    });
+    $('#deleteConfirm_cancel').jqxButton({
+        width: '65px'
+    });
+
+    $('#deleteConfirmWindow').on('close',
+        function(event) {
+            if (event.args.dialogResult.OK) {
+                var selectedrowindex = $("#panelGrid").jqxGrid('getselectedrowindex');
+                var id = $("#panelGrid").jqxGrid('getrowid', selectedrowindex);
+
+                $.ajax({
+                    url: urlbase + "?cmd=del&id=" + id,
+                    dataType: "json",
+                    timeout: interval,
+                    success: function(data) {
+                        if (data == true) $("#panelGrid").jqxGrid('deleterow', id);
+                        else {
+                            $('#failedWindow').jqxWindow('open');
+                        }
+                    },
+                    complete: function(XMLHttpRequest, status) {
+                        if (status == 'timeout') {
+                            $('#failedWindow').jqxWindow('open');
+                        } else if (status == "parsererror")
+                            window.location.href = "login.php";
+                    }
+                });
+
+            }
+        });
+
+    //清空记录确认窗口
+    $('#clearConfirmWindow').jqxWindow({
+        height: 100,
+        width: 270,
+        resizable: false,
+        isModal: true,
+        modalOpacity: 0.3,
+        okButton: $('#clearConfirm_ok'),
+        cancelButton: $('#clearConfirm_cancel'),
+        autoOpen: false,
+    });
+
+    $('#clearConfirm_ok').jqxButton({
+        width: '65px'
+    });
+    $('#clearConfirm_cancel').jqxButton({
+        width: '65px'
+    });
+
+    $('#clearConfirmWindow').on('close',
+        function(event) {
+            if (event.args.dialogResult.OK) {
+
+                $.ajax({
+                    url: urlbase + "?cmd=clear",
+                    dataType: "json",
+                    timeout: interval,
+                    success: function(data) {
+                        if (data == true) $('#panelGrid').jqxGrid('clear');
+                        else {
+                            $('#failedWindow').jqxWindow('open');
+                        }
+
+                    },
+                    complete: function(XMLHttpRequest, status) {
+                        if (status == 'timeout') {
+                            $('#failedWindow').jqxWindow('open');
+                        } else if (status == "parsererror")
+                            window.location.href = "login.php";
+                    }
+                });
+
+            }
+        });
+
+	//注销确认窗口
+    $('#logoutConfirmWindow').jqxWindow({
+        height: 100,
+        width: 270,
+        resizable: false,
+		isModal: true,
+        modalOpacity: 0.3,
+        okButton: $('#logoutConfirm_ok'),
+        cancelButton: $('#logoutConfirm_cancel'),
+        autoOpen: false,
+    });
+
+    $('#logoutConfirm_ok').jqxButton({
+        width: '65px'
+    });
+	
+    $('#logoutConfirm_cancel').jqxButton({
+        width: '65px'
+    });
+
+    $('#logoutConfirmWindow').on('close', function(event) {
+		if (event.args.dialogResult.OK) {
+			window.location.href = "logout.php";
+		}
+    });
+	$("#logout").click(function(e) {
+        $('#logoutConfirmWindow').jqxWindow('open');
+        e.preventDefault();
+    });
+	
+    $('#failedWindow').jqxWindow({
+        height: 100,
+        width: 270,
+        resizable: false,
+        isModal: true,
+        modalOpacity: 0.3,
+        okButton: $('#failed_ok'),
+        autoOpen: false,
+    });
+
+    $('#failed_ok').jqxButton({
+        width: '65px'
+    });
+
+    //查询窗口
+    $("#searchWindow").jqxWindow({
+        resizable: false,
+        autoOpen: false,
+        isModal: true,
+        modalOpacity: 0.3,
+        width: 210,
+        height: 180
+    });
+
+    $("#findButton").jqxButton({
+        width: 70
+    });
+    $("#clearButton").jqxButton({
+        width: 70
+    });
+
+    $("#dropdownlist").jqxDropDownList({
+        autoDropDownHeight: true,
+        selectedIndex: 0,
+        width: 200,
+        height: 23,
+        source: ['时间', 'IP', '来源', '客户端', '请求', '携带数据', '保持连接']
+    });
+
+    $("#findButton").click(function() {
+        $("#panelGrid").jqxGrid('clearfilters');
+        var searchColumnIndex = $("#dropdownlist").jqxDropDownList('selectedIndex');
+        var datafield = "";
+        switch (searchColumnIndex) {
+            case 0:
+                datafield = "request_date_and_time_string";
+                break;
+            case 1:
+                datafield = "user_IP";
+                break;
+            case 2:
+                datafield = "location";
+                break;
+            case 3:
+                datafield = "client";
+                break;
+            case 4:
+                datafield = "request_method";
+                break;
+            case 5:
+                datafield = "data_type";
+                break;
+            case 6:
+                datafield = "keepsession";
+                break;
+        }
+
+        var searchText = $("#search_input_field").val();
+        var filtergroup = new $.jqx.filter();
+        var filter_or_operator = 1;
+        var filtervalue = searchText;
+        var filtercondition = 'contains';
+        var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+        filtergroup.addfilter(filter_or_operator, filter);
+        $("#panelGrid").jqxGrid('addfilter', datafield, filtergroup);
+
+        $("#panelGrid").jqxGrid('applyfilters');
+    });
+
+    $("#clearButton").click(function() {
+        $("#panelGrid").jqxGrid('clearfilters');
+    });
+
+
+    //////////////
+    //大小自适应//
+    //////////////
+    $(window).resize(function() {
+        var base_height = $("#nav-section").height() - $("#dash-logo").outerHeight(true);
+        $('#panelGrid').jqxGrid({
+            height: base_height > 0 ? base_height : 0
+        });
+
+        //$('#panelGrid').jqxGrid('autoresizecolumn', 'request_date_and_time_string'); 
+        //$('#panelGrid').jqxGrid('autoresizecolumn', 'data_type'); 
+        //$('#panelGrid').jqxGrid('autoresizecolumn', 'user_IP');
+    });
+
+
+    /////////////////////
+    //xss显示面板初始化//
+    /////////////////////
+
+    //数据源与datafields
+    var grid_source = {
         datatype: "json",
         datafields: [{
             name: 'user_IP'
-        },
-        {
+        }, {
             name: 'location'
-        },
-        {
+        }, {
             name: 'data_type'
-        },
-        {
+        }, {
             name: 'keepsession'
-        },
-        {
+        }, {
             name: 'user_port'
-        },
-        {
+        }, {
             name: 'protocol'
-        },
-        {
+        }, {
             name: 'request_method'
-        },
-        {
+        }, {
             name: 'request_URI'
-        },
-        {
+        }, {
             name: 'request_time'
-        },
-        {
+        }, {
             name: 'headers_data'
-        },
-        {
+        }, {
             name: 'get_data'
-        },
-        {
+        }, {
             name: 'post_data'
-        },
-        {
+        }, {
             name: 'cookie_data'
-        },
-        {
+        }, {
             name: 'decoded_get_data'
-        },
-        {
+        }, {
             name: 'decoded_post_data'
-        },
-        {
+        }, {
             name: 'decoded_cookie_data'
-        },
-        {
+        }, {
             name: 'request_date_string'
-        },
-        {
+        }, {
             name: 'request_time_string'
-        },
-        {
+        }, {
             name: 'request_date_and_time_string'
-        },
-        {
+        }, {
             name: 'client'
-        },
-
-        ],
+        }, ],
         id: 'request_time',
         url: urlbase + "?cmd=list",
         root: 'data',
     };
 
-	//从接口获得数据后的处理，格式化时间与根据useragent判断客户端
-    var dataAdapter = new $.jqx.dataAdapter(source, {
+    //从接口获得数据后的处理，格式化时间与根据useragent判断客户端
+    var grid_dataAdapter = new $.jqx.dataAdapter(grid_source, {
         downloadComplete: function(data, status, xhr) {
             if (status == "success") {
                 var i = data.length;
@@ -87,10 +293,10 @@ $(document).ready(function() {
                     data[i].request_date_string = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日";
                     data[i].request_time_string = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
                     data[i].request_date_and_time_string = data[i].request_date_string + " " + data[i].request_time_string;
-                    data[i].keepsession = (data[i].keepsession == true) ? "是": "否";
+                    data[i].keepsession = (data[i].keepsession === true) ? "是" : "否";
                     data[i].client = data[i].headers_data["User-Agent"] ? get_client_info(data[i].headers_data["User-Agent"]) : "未知";
 
-                    var data_type = new Object();
+                    var data_type = {};
                     var get_keys = Object.keys(data[i].get_data);
                     var post_keys = Object.keys(data[i].post_data);
                     var cookie_keys = Object.keys(data[i].cookie_data);
@@ -106,27 +312,26 @@ $(document).ready(function() {
         },
     });
 
-	//每行detail信息初始化
+    //每行detail信息初始化
     var initrowdetails = function(index, parentElement, gridElement, datarecord) {
         var tabsdiv = null;
         var information = null;
-        var notes = null;
         var get_grid = null;
         var post_grid = null;
         var cookie_grid = null;
         var headers_grid = null;
         tabsdiv = $($(parentElement).children()[0]);
-        if (tabsdiv != null) {
+        if (tabsdiv !== null) {
             information = tabsdiv.find('.information');
             get_grid = tabsdiv.find('.get_grid');
             post_grid = tabsdiv.find('.post_grid');
             cookie_grid = tabsdiv.find('.cookie_grid');
             headers_grid = tabsdiv.find('.headers_grid');
-            
-			//GET表
-            var get_data = new Array();
-            for (key in datarecord.get_data) {
-                var get_data_item = new Array();
+
+            //GET表
+            var get_data = [];
+            for (var key in datarecord.get_data) {
+                var get_data_item = [];
                 get_data_item.push(key);
                 get_data_item.push(datarecord.get_data[key]);
                 var decoded_value = "";
@@ -142,23 +347,19 @@ $(document).ready(function() {
                     name: 'key',
                     type: 'string',
                     map: '0'
-                },
-                {
+                }, {
                     name: 'value',
                     type: 'string',
                     map: '1'
-                },
-                {
+                }, {
                     name: 'decoded_value',
                     type: 'string',
                     map: '2'
-                },
-                ],
+                }, ],
                 datatype: "array"
             };
             var get_source_dataAdapter = new $.jqx.dataAdapter(get_source);
             get_grid.jqxGrid({
-                autorowheight: true,
                 autorowheight: true,
                 columnsautoresize: true,
                 pageable: true,
@@ -174,38 +375,35 @@ $(document).ready(function() {
                     if (get_source.localdata.length && get_source.localdata.length > 0) get_grid.jqxGrid('autoresizecolumn', 'key');
                 },
                 columns: datarecord.decoded_get_data ? [{
-                    text: '键',
-                    datafield: 'key'
-                },
-                {
-                    text: '值',
-                    datafield: 'value'
-                },
-                {
-                    text: '解码',
-                    datafield: 'decoded_value'
-                },
+                        text: '键',
+                        datafield: 'key'
+                    }, {
+                        text: '值',
+                        datafield: 'value'
+                    }, {
+                        text: '解码',
+                        datafield: 'decoded_value'
+                    },
 
                 ] : [{
                     text: '键',
                     datafield: 'key'
-                },
-                {
+                }, {
                     text: '值',
                     datafield: 'value'
-                },
-                ]
+                }, ]
             });
 
-			//POST表
-            var post_data = new Array();
+            //POST表
+            var post_data = [];
             for (key in datarecord.post_data) {
-                var post_data_item = new Array();
+                var post_data_item = [];
                 post_data_item.push(key);
                 post_data_item.push(datarecord.post_data[key]);
 
                 var decoded_value = "";
-                if (datarecord.decoded_post_data) decoded_value = datarecord.decoded_post_data[key];
+                if (datarecord.decoded_post_data)
+                    decoded_value = datarecord.decoded_post_data[key];
                 post_data_item.push(decoded_value);
 
                 post_data.push(post_data_item);
@@ -214,20 +412,18 @@ $(document).ready(function() {
 
                 localdata: post_data,
                 datafields: [{
-                    name: 'key',
-                    type: 'string',
-                    map: '0'
-                },
-                {
-                    name: 'value',
-                    type: 'string',
-                    map: '1'
-                },
-                {
-                    name: 'decoded_value',
-                    type: 'string',
-                    map: '2'
-                },
+                        name: 'key',
+                        type: 'string',
+                        map: '0'
+                    }, {
+                        name: 'value',
+                        type: 'string',
+                        map: '1'
+                    }, {
+                        name: 'decoded_value',
+                        type: 'string',
+                        map: '2'
+                    },
 
                 ],
                 datatype: "array"
@@ -245,39 +441,34 @@ $(document).ready(function() {
                 scrollmode: 'deferred',
                 localization: getLocalization('zh'),
                 enablebrowserselection: true,
-                columnsautoresize: true,
                 columnsresize: true,
                 height: 176,
                 width: '100%',
                 source: post_source_dataAdapter,
                 columns: datarecord.decoded_post_data ? [{
-                    text: '键',
-                    datafield: 'key'
-                },
-                {
-                    text: '值',
-                    datafield: 'value'
-                },
-                {
-                    text: '解码',
-                    datafield: 'decoded_value'
-                },
+                        text: '键',
+                        datafield: 'key'
+                    }, {
+                        text: '值',
+                        datafield: 'value'
+                    }, {
+                        text: '解码',
+                        datafield: 'decoded_value'
+                    },
 
                 ] : [{
                     text: '键',
                     datafield: 'key'
-                },
-                {
+                }, {
                     text: '值',
                     datafield: 'value'
-                },
-                ]
+                }, ]
             });
 
-			//COOKIE表
-            var cookie_data = new Array();
+            //COOKIE表
+            var cookie_data = [];
             for (key in datarecord.cookie_data) {
-                var cookie_data_item = new Array();
+                var cookie_data_item = [];
                 cookie_data_item.push(key);
                 cookie_data_item.push(datarecord.cookie_data[key]);
 
@@ -293,18 +484,15 @@ $(document).ready(function() {
                     name: 'key',
                     type: 'string',
                     map: '0'
-                },
-                {
+                }, {
                     name: 'value',
                     type: 'string',
                     map: '1'
-                },
-                {
+                }, {
                     name: 'decoded_value',
                     type: 'string',
                     map: '2'
-                },
-                ],
+                }, ],
                 datatype: "array"
             };
             var cookie_source_dataAdapter = new $.jqx.dataAdapter(cookie_source);
@@ -319,7 +507,6 @@ $(document).ready(function() {
                 scrollmode: 'deferred',
                 localization: getLocalization('zh'),
                 enablebrowserselection: true,
-                columnsautoresize: true,
                 columnsresize: true,
                 height: 176,
                 width: '100%',
@@ -327,30 +514,25 @@ $(document).ready(function() {
                 columns: datarecord.decoded_cookie_data ? [{
                     text: '键',
                     datafield: 'key'
-                },
-                {
+                }, {
                     text: '值',
                     datafield: 'value'
-                },
-                {
+                }, {
                     text: '解码',
                     datafield: 'decoded_value'
-                },
-                ] : [{
+                }, ] : [{
                     text: '键',
                     datafield: 'key'
-                },
-                {
+                }, {
                     text: '值',
                     datafield: 'value'
-                },
-                ]
+                }, ]
             });
 
-			//HTTP Headers表
-            var headers_data = new Array();
+            //HTTP Headers表
+            var headers_data = [];
             for (key in datarecord.headers_data) {
-                var headers_data_item = new Array();
+                var headers_data_item = [];
                 headers_data_item.push(key);
                 headers_data_item.push(datarecord.headers_data[key]);
                 headers_data.push(headers_data_item);
@@ -358,15 +540,14 @@ $(document).ready(function() {
             var headers_source = {
                 localdata: headers_data,
                 datafields: [{
-                    name: 'key',
-                    type: 'string',
-                    map: '0'
-                },
-                {
-                    name: 'value',
-                    type: 'string',
-                    map: '1'
-                },
+                        name: 'key',
+                        type: 'string',
+                        map: '0'
+                    }, {
+                        name: 'value',
+                        type: 'string',
+                        map: '1'
+                    },
 
                 ],
                 datatype: "array"
@@ -383,7 +564,6 @@ $(document).ready(function() {
                 scrollmode: 'deferred',
                 localization: getLocalization('zh'),
                 enablebrowserselection: true,
-                columnsautoresize: true,
                 columnsresize: true,
                 width: '100%',
                 height: 176,
@@ -392,17 +572,15 @@ $(document).ready(function() {
                 columns: [{
                     text: '键',
                     datafield: 'key'
-                },
-                {
+                }, {
                     text: '值',
                     datafield: 'value'
-                },
-                ]
+                }, ]
             });
-			
-			//其他信息
+
+            //其他信息
             var container = $('<div style="margin: 25px;"></div>');
-			container.appendTo($(information));
+            container.appendTo($(information));
             var leftcolumn = $('<div style="float: left; width: 45%;"></div>');
             var rightcolumn = $('<div style="float: left; width: 40%;"></div>');
 
@@ -428,25 +606,31 @@ $(document).ready(function() {
             $(rightcolumn).append(uri_item);
             $(rightcolumn).append(client_item);
 
-			//tab大小调整
+            //tab大小调整
             $(tabsdiv).jqxTabs({
                 width: '95%',
                 height: '100%'
             });
         }
-    }
+    };
 
-	//主面板初始化
+    //主面板初始化
     $("#panelGrid").jqxGrid({
 
         pageable: true,
-		//如果需要autoresizecolumn，可以在这开启
+        //如果需要autoresizecolumn，可以在这开启
         ready: function() {
             //$('#panelGrid').jqxGrid('autoresizecolumn', 'request_date_and_time_string'); 
             //$('#panelGrid').jqxGrid('autoresizecolumn', 'data_type'); 
             //$('#panelGrid').jqxGrid('autoresizecolumn', 'user_IP');
+
+            //////////////////////////
+            //定时判断是否有新的记录//
+            //////////////////////////
+            checkNewMessages();
+            setIntervalID = setInterval(checkNewMessages, interval);
         },
-		//最底下的状态栏初始化
+        //最底下的状态栏初始化
         pagerrenderer: function() {
             var container = $("<div style='overflow: hidden; position: relative; '></div>");
             var deleteButton = $("<div style='float: left; margin-left: 5px;'><img style='position: relative; margin-top: 2px;' src='static/images/delete.png'/><span style='margin-left: 4px; position: relative; top: 3px;'>删除</span></div>");
@@ -475,20 +659,17 @@ $(document).ready(function() {
 
                 if (selectedrowindex >= 0) {
                     $('#deleteConfirmWindow').jqxWindow('open');
-                    $("#deleteConfirmWindow").addClass('animated');
                 }
 
             });
 
             clearButton.click(function(event) {
                 $('#clearConfirmWindow').jqxWindow('open');
-                $("#clearConfirmWindow").addClass('animated');
             });
-			
+
             // search for a record.
             searchButton.click(function(event) {
                 $("#searchWindow").jqxWindow('open');
-                $("#searchWindow").addClass('animated');
             });
 
             var pageElementsContainer = $("<div style='overflow: hidden;float: right;position: relative;margin: 5.5px; '></div>");
@@ -514,15 +695,7 @@ $(document).ready(function() {
             label.appendTo(pageElementsContainer);
             pageElementsContainer.appendTo(container);
             self.label = label;
-            // update buttons states.
-            var handleStates = function(event, button, className, add) {
-                button.on(event,
-                function() {
-                    if (add == true) {
-                        button.find('div').addClass(className);
-                    } else button.find('div').removeClass(className);
-                });
-            }
+
             rightButton.click(function() {
                 $("#panelGrid").jqxGrid('gotonextpage');
             });
@@ -536,8 +709,8 @@ $(document).ready(function() {
         pagesize: 25,
         localization: getLocalization('zh'),
         width: '100%',
-        height: $("#nav-section").height() - $("#dash-logo").outerHeight(true) - 3,
-        source: dataAdapter,
+        height: base_height - 2 > 0 ? base_height - 2 : 0,
+        source: grid_dataAdapter,
         enablebrowserselection: true,
         columnsresize: true,
         rowdetails: true,
@@ -550,30 +723,24 @@ $(document).ready(function() {
         columns: [{
             text: '时间',
             datafield: 'request_date_and_time_string',
-            width: 160
-        },
-        {
+            width: 165
+        }, {
             text: 'IP',
             datafield: 'user_IP'
-        },
-        {
+        }, {
             text: '来源',
             datafield: 'location'
-        },
-        {
+        }, {
             text: '客户端',
             datafield: 'client'
-        },
-        {
+        }, {
             text: '请求',
             datafield: 'request_method',
-            width: 60
-        },
-        {
+            width: 55
+        }, {
             text: '携带数据',
             datafield: 'data_type'
-        },
-        {
+        }, {
             text: '保持连接',
             datafield: 'keepsession',
             width: 60,
@@ -582,241 +749,17 @@ $(document).ready(function() {
     });
 
     $("#panelGrid").on('pagechanged',
-    function() {
-        var datainfo = $("#panelGrid").jqxGrid('getdatainformation');
-        var paginginfo = datainfo.paginginformation;
-        self.label.text(1 + paginginfo.pagenum * paginginfo.pagesize + "-" + Math.min(datainfo.rowscount, (paginginfo.pagenum + 1) * paginginfo.pagesize) + ' of ' + datainfo.rowscount);
-    });
-
-    /*所有窗口初始化*/
-    //删除记录确认窗口
-    $('#deleteConfirmWindow').jqxWindow({
-        height: 100,
-        width: 270,
-        resizable: false,
-        isModal: true,
-        modalOpacity: 0.3,
-        okButton: $('#deleteConfirm_ok'),
-        cancelButton: $('#deleteConfirm_cancel'),
-        autoOpen: false,
-    });
-    $('#deleteConfirm_ok').jqxButton({
-        width: '65px'
-    });
-    $('#deleteConfirm_cancel').jqxButton({
-        width: '65px'
-    });
-
-    $('#deleteConfirmWindow').on('close',
-    function(event) {
-        if (event.args.dialogResult.OK) {
-            var selectedrowindex = $("#panelGrid").jqxGrid('getselectedrowindex');
-            var id = $("#panelGrid").jqxGrid('getrowid', selectedrowindex);
-
-            $.ajax({
-                url: urlbase + "?cmd=del&id=" + id,
-                dataType: "json",
-                timeout: interval,
-                success: function(data) {
-                    if (data == true) $("#panelGrid").jqxGrid('deleterow', id);
-                    else {
-                        $('#failedWindow').jqxWindow('open');
-                        $("#failedWindow").addClass('animated');
-                    }
-
-                },
-                complete: function(XMLHttpRequest, status) {　　　　
-                    if (status == 'timeout')　　　 {
-                        $('#failedWindow').jqxWindow('open');
-                        $("#failedWindow").addClass('animated');
-                    } else if (status == "parsererror") window.location.href = "login.php";　　
-                }
-            });
-
-        }
-    });
-
-    //清空记录确认窗口
-    $('#clearConfirmWindow').jqxWindow({
-        height: 100,
-        width: 270,
-        resizable: false,
-        isModal: true,
-        modalOpacity: 0.3,
-        okButton: $('#clearConfirm_ok'),
-        cancelButton: $('#clearConfirm_cancel'),
-        autoOpen: false,
-    });
-
-    $('#clearConfirm_ok').jqxButton({
-        width: '65px'
-    });
-    $('#clearConfirm_cancel').jqxButton({
-        width: '65px'
-    });
-
-    $('#clearConfirmWindow').on('close',
-    function(event) {
-        if (event.args.dialogResult.OK) {
-
-            $.ajax({
-                url: urlbase + "?cmd=clear",
-                dataType: "json",
-                timeout: interval,
-                success: function(data) {
-                    if (data == true) $('#panelGrid').jqxGrid('clear');
-                    else {
-                        $('#failedWindow').jqxWindow('open');
-                        $("#failedWindow").addClass('animated');
-                    }
-
-                },
-                complete: function(XMLHttpRequest, status) {　　　　
-                    if (status == 'timeout')　　　 {
-                        $('#failedWindow').jqxWindow('open');
-                        $("#failedWindow").addClass('animated');
-                    } else if (status == "parsererror") window.location.href = "login.php";　　
-                }
-            });
-
-        }
-    });
-
-	//注销确认窗口
-    $('#logoutConfirmWindow').jqxWindow({
-        height: 100,
-        width: 270,
-        resizable: false,
-        okButton: $('#logoutConfirm_ok'),
-        cancelButton: $('#logoutConfirm_cancel'),
-        autoOpen: false,
-    });
-
-    $('#logoutConfirm_ok').jqxButton({
-        width: '65px'
-    });
-    $('#logoutConfirm_cancel').jqxButton({
-        width: '65px'
-    });
-
-    $('#logoutConfirmWindow').on('close',
-		function(event) {
-			if (event.args.dialogResult.OK) {
-				window.location.href = "logout.php";
-			}
-    });
-	
-	
-	
-    $('#failedWindow').jqxWindow({
-        height: 100,
-        width: 270,
-        resizable: false,
-        isModal: true,
-        modalOpacity: 0.3,
-        okButton: $('#failed_ok'),
-        autoOpen: false,
-    });
-    $('#failed_ok').jqxButton({
-        width: '65px'
-    });
-
-    //查询窗口
-    $("#searchWindow").jqxWindow({
-        resizable: false,
-        autoOpen: false,
-        width: 210,
-        height: 180
-    });
-	
-    // create find and clear buttons.
-    $("#findButton").jqxButton({
-        width: 70
-    });
-    $("#clearButton").jqxButton({
-        width: 70
-    });
-	
-    // find records that match a criteria.
-    $("#dropdownlist").jqxDropDownList({
-        autoDropDownHeight: true,
-        selectedIndex: 0,
-        width: 200,
-        height: 23,
-        source: ['时间', 'IP', '来源', '客户端', '请求', '携带数据', '保持连接']
-    });
-
-    $("#findButton").click(function() {
-        $("#panelGrid").jqxGrid('clearfilters');
-        var searchColumnIndex = $("#dropdownlist").jqxDropDownList('selectedIndex');
-        var datafield = "";
-        switch (searchColumnIndex) {
-        case 0:
-            datafield = "request_date_and_time_string";
-            break;
-        case 1:
-            datafield = "user_IP";
-            break;
-        case 2:
-            datafield = "location";
-            break;
-        case 3:
-            datafield = "client";
-            break;
-        case 4:
-            datafield = "request_method";
-            break;
-        case 5:
-            datafield = "data_type";
-            break;
-        case 6:
-            datafield = "keepsession";
-            break;
-        }
-
-        var searchText = $("#inputField").val();
-        var filtergroup = new $.jqx.filter();
-        var filter_or_operator = 1;
-        var filtervalue = searchText;
-        var filtercondition = 'contains';
-        var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
-        filtergroup.addfilter(filter_or_operator, filter);
-        $("#panelGrid").jqxGrid('addfilter', datafield, filtergroup);
-        // apply the filters.
-        $("#panelGrid").jqxGrid('applyfilters');
-    });
-
-    // clear filters.
-    $("#clearButton").click(function() {
-        $("#panelGrid").jqxGrid('clearfilters');
-    });
-
-    //主面板大小自适应
-    $(window).resize(function() {
-        $('#panelGrid').jqxGrid({
-            height: $("#nav-section").height() - $("#dash-logo").outerHeight(true) - 3
+        function() {
+            var datainfo = $("#panelGrid").jqxGrid('getdatainformation');
+            var paginginfo = datainfo.paginginformation;
+            self.label.text(1 + paginginfo.pagenum * paginginfo.pagesize + "-" + Math.min(datainfo.rowscount, (paginginfo.pagenum + 1) * paginginfo.pagesize) + ' of ' + datainfo.rowscount);
         });
-        //$('#panelGrid').jqxGrid('autoresizecolumn', 'request_date_and_time_string'); 
-        //$('#panelGrid').jqxGrid('autoresizecolumn', 'data_type'); 
-        //$('#panelGrid').jqxGrid('autoresizecolumn', 'user_IP');
-    });
-
-	$("#logout").click(function() {
-        $('#logoutConfirmWindow').jqxWindow('open');
-        $("#logoutConfirmWindow").addClass('animated');
-         
-    });
-	
-    //定时判断是否有新的记录
-    checkNewMessages();
-    setIntervalID = setInterval(checkNewMessages, interval);
-
 });
 
 //获取新列表
 function checkNewMessages() {
     $.ajax({
-        url: urlbase + "?cmd=simplelist",
+        url: urlbase + "?cmd=id_list",
         dataType: "json",
         timeout: interval,
         success: function(data) {
@@ -830,18 +773,21 @@ function checkNewMessages() {
                         lastedID = data[id];
                     }
                 }
-                if (sum > 0) showNotification(sum, lastedID, interval);
+                if (sum > 0)
+                    showNotification(sum, lastedID, interval);
 
             }
             messageList = data;
         },
-        complete: function(XMLHttpRequest, status) {　　　　
-            if (status == 'timeout') {　　　　　interval *= 2;
+        complete: function(XMLHttpRequest, status) {
+            if (status == 'timeout') {
+                interval *= 2;
                 if (setIntervalID) {
                     clearInterval(setIntervalID);
-                    if (interval < 10000) setIntervalID = setInterval(checkNewMessages, interval);
-                }　　　　
-            } else if (status == "parsererror") window.location.href = "login.php";　　
+                    if (interval < 30000) setIntervalID = setInterval(checkNewMessages, interval);
+                }
+            } else if (status == "parsererror")
+                window.location.href = "login.php";
         }
     });
 }
@@ -881,37 +827,37 @@ function get_client_info(agent) {
         browser = "IE";
         browser_version = bv[1];
     }
-    browser_version = browser_version.match(/^[0-9\.]+$/) ? browser_version: "未知";
+    browser_version = browser_version.match(/^[0-9\.]+$/) ? browser_version : "未知";
 
-    $os = '未知操作系统';
-    if (agent.match(/win/i) && (agent.indexOf("95") > 0)) $os = 'Windows 95';
-    else if (agent.match(/win 9x/i) && (agent.indexOf("4.90") > 0)) $os = 'Windows ME';
-    else if (agent.match(/win/i) && agent.match(/98/i)) $os = 'Windows 98';
-    else if (agent.match(/win/i) && agent.match(/nt 6.0/i)) $os = 'Windows Vista';
-    else if (agent.match(/win/i) && agent.match(/nt 6.1/i)) $os = 'Windows 7';
-    else if (agent.match(/win/i) && agent.match(/nt 6.2/i)) $os = 'Windows 8';
-    else if (agent.match(/win/i) && agent.match(/nt 10.0/i)) $os = 'Windows 10';
-    else if (agent.match(/win/i) && agent.match(/nt 5.1/i)) $os = 'Windows XP';
-    else if (agent.match(/win/i) && agent.match(/nt 5/i)) $os = 'Windows 2000';
-    else if (agent.match(/win/i) && agent.match(/nt/i)) $os = 'Windows NT';
-    else if (agent.match(/win/i) && agent.match(/32/i)) $os = 'Windows 32';
-    else if (agent.match(/linux/i)) $os = 'Linux';
-    else if (agent.match(/unix/i)) $os = 'Unix';
-    else if (agent.match(/sun/i) && agent.match(/os/i)) $os = 'SunOS';
-    else if (agent.match(/ibm/i) && agent.match(/os/i)) $os = 'IBM OS/2';
-    else if (agent.match(/Mac/i) && agent.match(/PC/i)) $os = 'Macintosh';
-    else if (agent.match(/PowerPC/i)) $os = 'PowerPC';
-    else if (agent.match(/AIX/i)) $os = 'AIX';
-    else if (agent.match(/HPUX/i)) $os = 'HPUX';
-    else if (agent.match(/NetBSD/i)) $os = 'NetBSD';
-    else if (agent.match(/BSD/i)) $os = 'BSD';
-    else if (agent.match(/OSF1/i)) $os = 'OSF1';
-    else if (agent.match(/IRIX/i)) $os = 'IRIX';
-    else if (agent.match(/FreeBSD/i)) $os = 'FreeBSD';
-    else if (agent.match(/teleport/i)) $os = 'teleport';
-    else if (agent.match(/flashget/i)) $os = 'flashget';
-    else if (agent.match(/webzip/i)) $os = 'webzip';
-    else if (agent.match(/offline/i)) $os = 'offline';
+    var os = '未知操作系统';
+    if (agent.match(/win/i) && (agent.indexOf("95") > 0)) os = 'Windows 95';
+    else if (agent.match(/win 9x/i) && (agent.indexOf("4.90") > 0)) os = 'Windows ME';
+    else if (agent.match(/win/i) && agent.match(/98/i)) os = 'Windows 98';
+    else if (agent.match(/win/i) && agent.match(/nt 6.0/i)) os = 'Windows Vista';
+    else if (agent.match(/win/i) && agent.match(/nt 6.1/i)) os = 'Windows 7';
+    else if (agent.match(/win/i) && agent.match(/nt 6.2/i)) os = 'Windows 8';
+    else if (agent.match(/win/i) && agent.match(/nt 10.0/i)) os = 'Windows 10';
+    else if (agent.match(/win/i) && agent.match(/nt 5.1/i)) os = 'Windows XP';
+    else if (agent.match(/win/i) && agent.match(/nt 5/i)) os = 'Windows 2000';
+    else if (agent.match(/win/i) && agent.match(/nt/i)) os = 'Windows NT';
+    else if (agent.match(/win/i) && agent.match(/32/i)) os = 'Windows 32';
+    else if (agent.match(/linux/i)) os = 'Linux';
+    else if (agent.match(/unix/i)) os = 'Unix';
+    else if (agent.match(/sun/i) && agent.match(/os/i)) os = 'SunOS';
+    else if (agent.match(/ibm/i) && agent.match(/os/i)) os = 'IBM OS/2';
+    else if (agent.match(/Mac/i) && agent.match(/PC/i)) os = 'Macintosh';
+    else if (agent.match(/PowerPC/i)) os = 'PowerPC';
+    else if (agent.match(/AIX/i)) os = 'AIX';
+    else if (agent.match(/HPUX/i)) os = 'HPUX';
+    else if (agent.match(/NetBSD/i)) os = 'NetBSD';
+    else if (agent.match(/BSD/i)) os = 'BSD';
+    else if (agent.match(/OSF1/i)) os = 'OSF1';
+    else if (agent.match(/IRIX/i)) os = 'IRIX';
+    else if (agent.match(/FreeBSD/i)) os = 'FreeBSD';
+    else if (agent.match(/teleport/i)) os = 'teleport';
+    else if (agent.match(/flashget/i)) os = 'flashget';
+    else if (agent.match(/webzip/i)) os = 'webzip';
+    else if (agent.match(/offline/i)) os = 'offline';
 
-    return $os + ' ' + browser + '(' + browser_version + ')';
+    return os + ' ' + browser + '(' + browser_version + ')';
 }

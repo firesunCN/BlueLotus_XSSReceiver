@@ -2,7 +2,8 @@
 if(!defined('IN_XSS_PLATFORM')) {
 	exit('Access Denied');
 }
-require_once("aes.php");
+
+require_once("config.php");
 
 //nginx无getallheaders函数
 if (!function_exists('getallheaders')) {
@@ -97,14 +98,40 @@ function isBase64Formatted($str)
     return false;
 }
 
-function encrypt($info,$encryptPass) 
+function encrypt($info) 
 {
-	return AESEncryptCtr($info,$encryptPass);
+	if(ENABLE_ENCRYPT) {
+		if(ENCRYPT_TYPE==="AES") {
+			require_once("aes.php");
+			$info=AESEncryptCtr($info,ENCRYPT_PASS);
+		}
+		else {
+			require_once("rc4.php");
+			$info=base64_encode( rc4($info,ENCRYPT_PASS) );
+		}	
+	}
+	else
+		$info=base64_encode($info);
+	
+	return $info;
 }
 
-function decrypt($info,$encryptPass) 
+function decrypt($info) 
 {
-	return AESDecryptCtr($info,$encryptPass);
+	if(ENABLE_ENCRYPT) {
+		if(ENCRYPT_TYPE==="AES") {
+			require_once("aes.php");
+			$info=AESDecryptCtr($info,ENCRYPT_PASS);
+			
+		}
+		else {
+			require_once("rc4.php");
+			$info=rc4(base64_decode($info),ENCRYPT_PASS);
+		}
+	}
+	else
+		$info=base64_decode($info);
+	return $info;
 }
 
 //基于Discuz X3.1 function_misc.php
