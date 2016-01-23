@@ -101,7 +101,7 @@ require("auth.php");
                                             <input id="myJS_name" />.js
                                         </div>
                                         <div class="js_content_div">
-                                            <div>模板说明：</div>
+                                            <div>js文件说明：</div>
                                             <textarea id="myJS_description" ></textarea>
                                         </div>
 
