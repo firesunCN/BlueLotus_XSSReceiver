@@ -85,14 +85,14 @@ define('ENCRYPT_TYPE', "RC4");
 
 * 故根目录下提供了change_encrypt_pass.php用于重新加密xss记录,js的描述,ip封禁列表
 * 请在修改加密方式或者加密密码后执行此文件（如果选择不加密,加密密码写任意值）
-* **使用前，请将change_encrypt_pass.php开始的exit()注释掉，并且务必做好备份**
+* **使用前，请将change_encrypt_pass.php开始的exit()注释掉，并且务必做好数据备份以防不测**
 * 用法：在shell下执行
 `php change_encrypt_pass.php (以前是否加密true/false) (旧加密密码) (旧加密方法AES/RC4) (现在是否加密) (新加密密码) (新加密方法)`
 
 * 例:
 
-	`php change_encrypt_pass.php true bluelotus AES true bluelotus RC4`
-	`php change_encrypt_pass.php true bluelotus AES false xxxx(任意值) AES`
+	* `php change_encrypt_pass.php true bluelotus AES true bluelotus RC4`
+	* `php change_encrypt_pass.php true bluelotus AES false xxxx(任意值) AES`
  
  
 * 也可执行
