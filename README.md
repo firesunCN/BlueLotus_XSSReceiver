@@ -5,8 +5,8 @@
 ![](./guide/mainpanel.png)
 
 ##使用步骤
-1. 上传所有文件至空间根目录
-2. 修改config.php配置文件，指定xss数据、我的js、js模板的存放目录，以及数据是否启用加密、加密密码、与加密方法（详细说明见config.php）
+* 上传所有文件至空间根目录
+* 修改config.php配置文件，指定xss数据、我的js、js模板的存放目录，以及数据是否启用加密、加密密码、与加密方法（详细说明见config.php）
 ```php
 define('PASS', '2a05218c7aa0a6dbd370985d984627b8');
 define('DATA_PATH', 'data');
@@ -16,12 +16,14 @@ define('ENABLE_ENCRYPT', true);
 define('ENCRYPT_PASS', "bluelotus");
 define('ENCRYPT_TYPE', "RC4");
 ```
-3. PASS为登录密码，可用`php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"`生成密码hash
-4. 赋予`DATA_PATH`，`MY_JS_PATH`，`JS_TEMPLATE_PATH`对应的目录写权限
-5. 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
-6. 可访问login.php登录查看记录的数据，初始登录密码bluelotus
-7. 如果有权限，请开启Apache中的AllowOverride以使.htaccess生效（可选）
-
+* PASS为登录密码，可用`php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"`生成密码hash
+* 赋予`DATA_PATH`，`MY_JS_PATH`，`JS_TEMPLATE_PATH`对应的目录写权限
+* 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
+* 可访问login.php登录查看记录的数据，初始登录密码bluelotus
+* 如果有权限，请开启Apache中的AllowOverride以使.htaccess生效（可选）
+	* DATA_PATH被设置为禁止web访问
+	* MY_JS_PATH与JS_TEMPLATE_PATH被设置为仅允许访问js文件
+	
 ![](./guide/login.png)
 
 ## 目前支持功能
