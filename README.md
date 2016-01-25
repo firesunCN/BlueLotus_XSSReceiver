@@ -67,7 +67,7 @@ define('ENCRYPT_TYPE', "RC4");
 ![](./guide/myjs.png)
 
 * 用户可随时插入js模板
-* 部分整合[xssor](https://github.com/evilcos/xssor)功能，方便生成payload
+* 部分整合[xssor](https://github.com/evilcos/xssor)功能，方便生成payload，xssor有跟强大的功能，大家可以去follow evilcos的github
 
 ![](./guide/xssor.png)
 
@@ -113,9 +113,22 @@ define('ENCRYPT_TYPE', "RC4");
  	3. 执行`php change_encrypt_pass.php true bluelotus rc4 (现在是否加密) (新加密密码) (新加密方法)`
 	4. 升级完成
 
+## 邮件提醒
+
+修改config.php相关配置即可，默认关闭，开启后，每次接收到xss都会发邮件通知，需要短信提醒的直接把接收邮箱设置为手机邮箱即可
+
+```
+define('MAIL_ENABLE', false);//开启邮件通知
+define('SMTP_SERVER', "smtp.xxx.com");//smtp服务器
+define('SMTP_PORT', 465);//端口
+define('SMTP_SECURE', "ssl");
+define('MAIL_USER', "xxx@xxx.com");//发件人用户名
+define('MAIL_PASS', "xxxxxx");//发件人密码
+define('MAIL_FROM', "xxx@xxx.com");//发件人地址（需真实，不可伪造）
+define('MAIL_RECV', "xxxx@xxxx.com");//接收通知的邮件地址
+```
+
 ## TODO
-* 邮件提醒
-* 短信提醒
 * 多用户（SQL版本）
 * WebSocket方式通知
 
