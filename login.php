@@ -21,6 +21,7 @@ if(isset($_SESSION['isLogin']) && $_SESSION['isLogin']===true)
 //判断ip是否在封禁列表中
 $forbiddenIPList=loadForbiddenIPList();
 $ip=$_SERVER['REMOTE_ADDR'];
+$is_pass_wrong=false;
 if(!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip]<=5)
 {
 	if(isset($_POST['password']) && $_POST['password']!="")
@@ -45,10 +46,12 @@ if(!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip]<=5)
 			else
 				$forbiddenIPList[$ip]=1;
 			saveForbiddenIPList($forbiddenIPList);
+			$is_pass_wrong=true;
 		}
-	}
-	
+	}	
 }
+else
+	$is_pass_wrong=true;
 
 function loadForbiddenIPList()
 {
@@ -97,7 +100,6 @@ function checkPassword($p)
 		$key=md5($salt.$key.$_SESSION['firesunCheck'].$salt);
 		$key=md5($salt.$key.$_SESSION['firesunCheck'].$salt);
 		return $key===$p;
-		
 	}	
 	return false;
 }
@@ -110,8 +112,6 @@ function generate_password( $length = 32 ) {
 		$password .= $chars[ mt_rand(0, strlen($chars) - 1) ];
 	return $password;  
 } 
-
-
 ?>
 
 <html>
@@ -123,6 +123,10 @@ function generate_password( $length = 32 ) {
 		
         <script type="text/javascript" src="static/js/jquery.min.js" ></script>
         <script type="text/javascript" src="static/js/login.js" ></script>
+		<?php 
+			if($is_pass_wrong)
+				echo '<script type="text/javascript" src="static/js/pass_is_wrong.js" ></script>';
+		?>
     </head>
     
     <body>
