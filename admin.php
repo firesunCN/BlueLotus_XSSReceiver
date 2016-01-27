@@ -1,5 +1,5 @@
 <?php
-define("IN_XSS_PLATFORM",true);
+define("IN_XSS_PLATFORM", true);
 require("auth.php");
 ?>
 <!DOCTYPE html>
