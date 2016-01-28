@@ -7,8 +7,7 @@ require_once("load.php");
 
 //nginx无getallheaders函数
 if (!function_exists('getallheaders')) {
-    function getallheaders()
-    {
+    function getallheaders() {
         foreach ($_SERVER as $name => $value) {
             if (substr($name, 0, 5) == 'HTTP_') {
                 $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
@@ -19,8 +18,7 @@ if (!function_exists('getallheaders')) {
 }
 
 //判断该记录是否
-function isKeepSession($info)
-{
+function isKeepSession($info) {
     $keepsession = false;
     
     foreach ($info['get_data'] as $k => $v) {
@@ -47,15 +45,13 @@ function isKeepSession($info)
 }
 
 //xss过滤
-function stripStr($str)
-{
+function stripStr($str) {
     if (get_magic_quotes_gpc())
         $str = stripslashes($str);
     return addslashes(htmlspecialchars($str, ENT_QUOTES, 'UTF-8'));
 }
 
-function stripArr($arr)
-{
+function stripArr($arr) {
     $new_arr = array();
     foreach ($arr as $k => $v) {
         $new_arr[stripStr($k)] = stripStr($v);
@@ -64,8 +60,7 @@ function stripArr($arr)
 }
 
 //尝试base64解码
-function tryBase64Decode($arr)
-{
+function tryBase64Decode($arr) {
     if (isset($arr) && count($arr) > 0) {
         $isChanged = 0;
         
@@ -88,8 +83,7 @@ function tryBase64Decode($arr)
 }
 
 //判断string是否为base64编码（判断方法：解码后为可见字符串）
-function isBase64Formatted($str)
-{
+function isBase64Formatted($str) {
     if (preg_match('/^[A-Za-z0-9+\/=]+$/', $str))
         if ($str == base64_encode(base64_decode($str)))
             if (preg_match('/^[A-Za-z0-9\x00-\x80~!@#$%&_+-=:";\'<>,\/"\[\]\\\^\.\|\?\*\+\(\)\{\}\s]+$/', base64_decode($str)))
@@ -97,8 +91,7 @@ function isBase64Formatted($str)
     return false;
 }
 
-function encrypt($info)
-{
+function encrypt($info) {
     if (ENCRYPT_ENABLE) {
         if (ENCRYPT_TYPE === "AES") {
             require_once("aes.php");
@@ -113,8 +106,7 @@ function encrypt($info)
     return $info;
 }
 
-function decrypt($info)
-{
+function decrypt($info) {
     if (ENCRYPT_ENABLE) {
         if (ENCRYPT_TYPE === "AES") {
             require_once("aes.php");
@@ -130,8 +122,7 @@ function decrypt($info)
 }
 
 //基于Discuz X3.1 function_misc.php
-function convertip($ip, $ipdatafile)
-{
+function convertip($ip, $ipdatafile) {
     $ipaddr = '未知';
     if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $ip)) {
         $iparray = explode('.', $ip);

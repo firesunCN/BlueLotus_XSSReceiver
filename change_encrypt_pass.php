@@ -29,22 +29,20 @@ if ($argv[1] === "update")
 else
     change_pass($argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6]);
 
-function update_from_old_version($old_encrypt_enable, $old_encrypt_pass)
-{
+function update_from_old_version($old_encrypt_enable, $old_encrypt_pass) {
     //如果从旧版本升级，就统一先切换为RC4，密码bluelotus
     modify_ForbiddenIPList($old_encrypt_enable, $old_encrypt_pass, "AES", "true", "bluelotus", "RC4");
     modify_xss_record($old_encrypt_enable, $old_encrypt_pass, "AES", "true", "bluelotus", "RC4");
 }
-function change_pass($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type)
-{
+
+function change_pass($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type) {
     modify_ForbiddenIPList($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type);
     modify_xss_record($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type);
     modify_js_desc(MY_JS_PATH, $old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type);
     modify_js_desc(JS_TEMPLATE_PATH, $old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type);
 }
 
-function modify_ForbiddenIPList($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type)
-{
+function modify_ForbiddenIPList($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type) {
     $logfile = DATA_PATH . '/forbiddenIPList.dat';
     
     $str = @file_get_contents($logfile);
@@ -60,8 +58,7 @@ function modify_ForbiddenIPList($old_encrypt_enable, $old_encrypt_pass, $old_enc
         echo "修改封禁ip失败，可能是没有权限，chmod 777！\n";
 }
 
-function modify_xss_record($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type)
-{
+function modify_xss_record($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type) {
     $files = glob(DATA_PATH . '/*.php');
     
     foreach ($files as $file) {
@@ -85,8 +82,8 @@ function modify_xss_record($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_
         }
     }
 }
-function modify_js_desc($path, $old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type)
-{
+
+function modify_js_desc($path, $old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type) {
     $files = glob($path . '/*.js');
     foreach ($files as $file) {
         //由于可能有中文名,故使用正则来提取文件名
@@ -109,8 +106,7 @@ function modify_js_desc($path, $old_encrypt_enable, $old_encrypt_pass, $old_encr
     }
 }
 
-function encrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type)
-{
+function encrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type) {
     if ($encrypt_enable) {
         if ($encrypt_type === "AES") {
             require_once("aes.php");
@@ -125,8 +121,7 @@ function encrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type)
     return $info;
 }
 
-function decrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type)
-{
+function decrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type) {
     if ($encrypt_enable) {
         if ($encrypt_type === "AES") {
             require_once("aes.php");

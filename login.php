@@ -48,8 +48,7 @@ if (!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip] <= 5) {
 } else
     $is_pass_wrong = true;
 
-function loadForbiddenIPList()
-{
+function loadForbiddenIPList() {
     $logfile = DATA_PATH . '/forbiddenIPList.dat';
     !file_exists($logfile) && @touch($logfile);
     $str = @file_get_contents($logfile);
@@ -69,8 +68,7 @@ function loadForbiddenIPList()
         return array();
 }
 
-function saveForbiddenIPList($forbiddenIPList)
-{
+function saveForbiddenIPList($forbiddenIPList) {
     $logfile = DATA_PATH . '/forbiddenIPList.dat';
     !file_exists($logfile) && @touch($logfile);
     $str = json_encode($forbiddenIPList);
@@ -82,8 +80,7 @@ function saveForbiddenIPList($forbiddenIPList)
 生成密码
 php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='bluelotus';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"
 */
-function checkPassword($p)
-{
+function checkPassword($p) {
     if (isset($_POST['firesunCheck']) && isset($_SESSION['firesunCheck']) && $_SESSION['firesunCheck'] != "" && $_POST['firesunCheck'] === $_SESSION['firesunCheck']) {
         //改了这个盐记得改login.js里的，两个要一致
         $salt = "!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";
@@ -97,8 +94,7 @@ function checkPassword($p)
 }
 
 //生成挑战应答的随机值
-function generate_password($length = 32)
-{
+function generate_password($length = 32) {
     $chars    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     $password = "";
     for ($i = 0; $i < $length; $i++)

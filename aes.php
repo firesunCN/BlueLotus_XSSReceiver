@@ -22,8 +22,7 @@ if (!defined('IN_XSS_PLATFORM')) {
  *              generated from the cipher key by KeyExpansion()
  * @return      ciphertext as byte-array (16 bytes)
  */
-function Cipher($input, $w) // main Cipher function [§5.1]
-{
+function Cipher($input, $w) {// main Cipher function [§5.1]
     $Nb = 4; // block size (in words): no of columns in state (fixed at 4 for AES)
     $Nr = count($w) / $Nb - 1; // no of rounds: 10/12/14 for 128/192/256-bit keys
     
@@ -53,8 +52,7 @@ function Cipher($input, $w) // main Cipher function [§5.1]
 }
 
 
-function AddRoundKey($state, $w, $rnd, $Nb) // xor Round Key into state S [§5.1.4]
-{
+function AddRoundKey($state, $w, $rnd, $Nb) {// xor Round Key into state S [§5.1.4]
     for ($r = 0; $r < 4; $r++) {
         for ($c = 0; $c < $Nb; $c++)
             $state[$r][$c] ^= $w[$rnd * 4 + $c][$r];
@@ -62,8 +60,7 @@ function AddRoundKey($state, $w, $rnd, $Nb) // xor Round Key into state S [§5.1
     return $state;
 }
 
-function SubBytes($s, $Nb) // apply SBox to state S [§5.1.1]
-{
+function SubBytes($s, $Nb) {// apply SBox to state S [§5.1.1]
     global $Sbox; // PHP needs explicit declaration to access global variables!
     for ($r = 0; $r < 4; $r++) {
         for ($c = 0; $c < $Nb; $c++)
@@ -72,8 +69,7 @@ function SubBytes($s, $Nb) // apply SBox to state S [§5.1.1]
     return $s;
 }
 
-function ShiftRows($s, $Nb) // shift row r of state S left by r bytes [§5.1.2]
-{
+function ShiftRows($s, $Nb) {// shift row r of state S left by r bytes [§5.1.2]
     $t = array(
         4
     );
@@ -86,8 +82,7 @@ function ShiftRows($s, $Nb) // shift row r of state S left by r bytes [§5.1.2]
     return $s; // see fp.gladman.plus.com/cryptography_technology/rijndael/aes.spec.311.pdf 
 }
 
-function MixColumns($s, $Nb) // combine bytes of each col of state S [§5.1.3]
-{
+function MixColumns($s, $Nb) {// combine bytes of each col of state S [§5.1.3]
     for ($c = 0; $c < 4; $c++) {
         $a = array(
             4
@@ -115,8 +110,7 @@ function MixColumns($s, $Nb) // combine bytes of each col of state S [§5.1.3]
  * @param key cipher key byte-array (16 bytes)
  * @return    key schedule as 2D byte-array (Nr+1 x Nb bytes)
  */
-function KeyExpansion($key) // generate Key Schedule from Cipher Key [§5.2]
-{
+function KeyExpansion($key) {// generate Key Schedule from Cipher Key [§5.2]
     global $Rcon; // PHP needs explicit declaration to access global variables!
     $Nb = 4; // block size (in words): no of columns in state (fixed at 4 for AES)
     $Nk = count($key) / 4; // key length (in words): 4/6/8 for 128/192/256-bit keys
@@ -152,16 +146,14 @@ function KeyExpansion($key) // generate Key Schedule from Cipher Key [§5.2]
     return $w;
 }
 
-function SubWord($w) // apply SBox to 4-byte word w
-{
+function SubWord($w) {// apply SBox to 4-byte word w
     global $Sbox; // PHP needs explicit declaration to access global variables!
     for ($i = 0; $i < 4; $i++)
         $w[$i] = $Sbox[$w[$i]];
     return $w;
 }
 
-function RotWord($w) // rotate 4-byte word w left by one byte
-{
+function RotWord($w) {// rotate 4-byte word w left by one byte
     $w[4] = $w[0];
     for ($i = 0; $i < 4; $i++)
         $w[$i] = $w[$i + 1];
@@ -213,8 +205,7 @@ $Rcon = array( array(0x00, 0x00, 0x00, 0x00),
  * @param nBits     number of bits to be used in the key (128, 192, or 256)
  * @return          encrypted text
  */
-function AESEncryptCtr($plaintext, $password = "blue-lotus", $nBits = 128)
-{
+function AESEncryptCtr($plaintext, $password = "blue-lotus", $nBits = 128) {
     $blockSize = 16; // block size fixed at 16 bytes / 128 bits (Nb=4) for AES
     if (!($nBits == 128 || $nBits == 192 || $nBits == 256))
         return ''; // standard allows 128/192/256 bit keys
@@ -287,8 +278,7 @@ function AESEncryptCtr($plaintext, $password = "blue-lotus", $nBits = 128)
  * @param nBits      number of bits to be used in the key (128, 192, or 256)
  * @return           decrypted text
  */
-function AESDecryptCtr($ciphertext, $password = "blue-lotus", $nBits = 128)
-{
+function AESDecryptCtr($ciphertext, $password = "blue-lotus", $nBits = 128) {
     $blockSize = 16; // block size fixed at 16 bytes / 128 bits (Nb=4) for AES
     if (!($nBits == 128 || $nBits == 192 || $nBits == 256))
         return ''; // standard allows 128/192/256 bit keys
@@ -354,8 +344,7 @@ function AESDecryptCtr($ciphertext, $password = "blue-lotus", $nBits = 128)
  * @param b  number of bits to shift a to the right (0..31)
  * @return   a right-shifted and zero-filled by b bits
  */
-function urs($a, $b)
-{
+function urs($a, $b) {
     $a &= 0xffffffff;
     $b &= 0x1f; // (bounds check)
     if ($a & 0x80000000 && $b > 0) { // if left-most bit set

@@ -7,6 +7,7 @@ if ( file_exists('config.php') ) {
 	display_header();
 	
 	@unlink($_SERVER['SCRIPT_FILENAME']);
+	@unlink('config-sample.php');
 	die( '<h1>已安装</h1><p>请勿重复安装！</p><p class="step"><a href="login.php" class="button button-large">登录</a></p></body></html>' );
 }
 
@@ -195,7 +196,7 @@ CONFIG;
 }
 
 
-function display_header( ) {
+function display_header() {
 
 ?>
 <!DOCTYPE html>
@@ -395,15 +396,14 @@ function display_setup_form( $error = null ) {
 } // end display_setup_form()
 
 //xss过滤
-function stripStr($str){
+function stripStr($str) {
 	if(get_magic_quotes_gpc())
 		$str=stripslashes($str);
 	return htmlspecialchars($str,ENT_QUOTES,'UTF-8');
 }
 
 //js描述重加密
-function modify_js_desc($path,$old_encrypt_enable,$old_encrypt_pass,$old_encrypt_type,$new_encrypt_enable,$new_encrypt_pass, $new_encrypt_type)
-{
+function modify_js_desc($path,$old_encrypt_enable,$old_encrypt_pass,$old_encrypt_type,$new_encrypt_enable,$new_encrypt_pass, $new_encrypt_type) {
 	$files = glob($path . '/*.js');
 	foreach ($files as $file){
 		//由于可能有中文名,故使用正则来提取文件名
@@ -425,8 +425,7 @@ function modify_js_desc($path,$old_encrypt_enable,$old_encrypt_pass,$old_encrypt
 }
 
 //加密
-function encrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) 
-{
+function encrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) {
 	if($encrypt_enable) {
 		if($encrypt_type==="AES") {
 			require_once("aes.php");
@@ -444,8 +443,7 @@ function encrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type)
 }
 
 //解密
-function decrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) 
-{
+function decrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) {
 	if($encrypt_enable) {
 		if($encrypt_type==="AES") {
 			require_once("aes.php");

@@ -6,8 +6,7 @@ require_once("load.php");
 require_once("functions.php");
 
 //对记录的读写操作，无数据库，采用读写文件的方式，文件名即请求时的时间戳，同时也是记录的id
-function save_xss_record($info, $filename)
-{
+function save_xss_record($info, $filename) {
     $logFile = dirname(__FILE__) . '/' . DATA_PATH . '/' . $filename . '.php';
     !file_exists($logFile) && @touch($logFile);
     
@@ -19,8 +18,7 @@ function save_xss_record($info, $filename)
         return true;
 }
 
-function load_xss_record($filename)
-{
+function load_xss_record($filename) {
     if (strpos($filename, "..") === false && strpos($filename, "/") === false && strpos($filename, "\\") === false) {
         $logFile = dirname(__FILE__) . '/' . DATA_PATH . '/' . $filename . '.php';
         if (!file_exists($logFile))
@@ -64,8 +62,7 @@ function load_xss_record($filename)
         return false;
 }
 
-function delete_xss_record($filename)
-{
+function delete_xss_record($filename) {
     if (strpos($filename, "..") === false && strpos($filename, "/") === false && strpos($filename, "\\") === false) {
         $logFile = dirname(__FILE__) . '/' . DATA_PATH . '/' . $filename . '.php';
         return unlink($logFile);
@@ -73,8 +70,7 @@ function delete_xss_record($filename)
         return false;
 }
 
-function clear_xss_record()
-{
+function clear_xss_record() {
     $files = glob(DATA_PATH . '/*.php');
     
     foreach ($files as $file) {
@@ -83,8 +79,7 @@ function clear_xss_record()
     return true;
 }
 
-function load_js_content($path, $filename)
-{
+function load_js_content($path, $filename) {
     if (strpos($filename, "..") === false && strpos($filename, "/") === false && strpos($filename, "\\") === false) {
         $file = dirname(__FILE__) . '/' . $path . '/' . $filename . '.js';
         if (!file_exists($file))
@@ -98,8 +93,7 @@ function load_js_content($path, $filename)
         return false;
 }
 
-function delete_js($path, $filename)
-{
+function delete_js($path, $filename) {
     if (strpos($filename, "..") === false && strpos($filename, "/") === false && strpos($filename, "\\") === false) {
         $file = dirname(__FILE__) . '/' . $path . '/' . $filename . '.desc';
         unlink($file);
@@ -110,8 +104,7 @@ function delete_js($path, $filename)
     
 }
 
-function clear_js($path)
-{
+function clear_js($path) {
     $files = glob($path . '/*.desc');
     foreach ($files as $file) {
         unlink($file);
@@ -124,8 +117,7 @@ function clear_js($path)
     return true;
 }
 
-function save_js_content($path, $content, $filename)
-{
+function save_js_content($path, $content, $filename) {
     $file = dirname(__FILE__) . '/' . $path . '/' . $filename . '.js';
     !file_exists($file) && @touch($file);
     
@@ -135,8 +127,7 @@ function save_js_content($path, $content, $filename)
         return true;
 }
 
-function save_js_desc($path, $desc, $filename)
-{
+function save_js_desc($path, $desc, $filename) {
     $file = dirname(__FILE__) . '/' . $path . '/' . $filename . '.desc';
     !file_exists($file) && @touch($file);
     

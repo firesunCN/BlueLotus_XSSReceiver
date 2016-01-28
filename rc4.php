@@ -30,8 +30,7 @@ if (!defined('IN_XSS_PLATFORM')) {
  * @return the result of the RC4 as a binary string
  * @author Michael Cutler <m@cotdp.com>
  */
-function rc4($data_str, $key_str)
-{
+function rc4($data_str, $key_str) {
     // convert input string(s) to array(s)
     $key  = array();
     $data = array();

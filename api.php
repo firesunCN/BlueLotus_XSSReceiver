@@ -185,8 +185,7 @@ else if (isset($_GET['my_js_cmd'])) {
     echo json_encode(false);
 
 
-function xss_record_id_list()
-{
+function xss_record_id_list() {
     $files = glob(DATA_PATH . '/*.php');
     $list  = array();
     foreach ($files as $file) {
@@ -197,8 +196,7 @@ function xss_record_id_list()
     return $list;
 }
 
-function xss_record_detail_list()
-{
+function xss_record_detail_list() {
     $list  = array();
     $files = glob(DATA_PATH . '/*.php');
     arsort($files);
@@ -226,8 +224,7 @@ function xss_record_detail_list()
 }
 
 //获取js的名字与描述列表
-function js_name_and_desc_list($path)
-{
+function js_name_and_desc_list($path) {
     $list  = array();
     $files = glob($path . '/*.js');
     arsort($files);
@@ -258,6 +255,5 @@ function js_name_and_desc_list($path)
         $list[] = $item;
         
     }
-    
     return $list;
 }
