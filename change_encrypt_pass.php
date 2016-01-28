@@ -24,10 +24,12 @@ exit();
 define("IN_XSS_PLATFORM", true);
 require_once("config.php");
 
-if ($argv[1] === "update")
-    update_from_old_version($argv[2], $argv[3]);
-else
-    change_pass($argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6]);
+if( isset( $argv[1] ) ) {
+	if ($argv[1] === "update")
+		update_from_old_version($argv[2], $argv[3]);
+	else
+		change_pass($argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6]);	
+}
 
 function update_from_old_version($old_encrypt_enable, $old_encrypt_pass) {
     //如果从旧版本升级，就统一先切换为RC4，密码bluelotus
