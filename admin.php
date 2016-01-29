@@ -11,12 +11,10 @@ require("auth.php");
     <title>控制面板</title>
     <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/main.min.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/notification.min.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/jqx.min.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/notification.min.css" type="text/css" />	
+	<link rel="stylesheet" href="static/css/jqx.base.css" type="text/css" />
+	<link rel="stylesheet" href="static/css/jqx.office.css" type="text/css" />
     <link rel="stylesheet" href="static/css/animate.min.css" type="text/css" />
-
-
-
 
 </head>
 

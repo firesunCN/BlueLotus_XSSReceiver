@@ -163,7 +163,6 @@ define('MAIL_RECV', "xxxx@xxxx.com");//接收通知的邮件地址
 
 * static/js与static/css下的js与css文件已压缩
 * 其中`jqxcore.js、jqxdata.js、jqxgrid.js、jqxgrid.columnsresize.js、jqxgrid.filter.js、jqxgrid.edit.js、jqxgrid.pager.js、jqxgrid.selection.js、jqxgrid.sort.js、jqxbuttons.js、jqxcombobox.js、jqxdropdownlist.js、jqxinput.js、jqxlistbox.js、jqxmenu.js、jqxscrollbar.js、jqxsplitter.js、jqxtabs.js、jqxtextarea.js、jqxtoolbar.js、jqxwindow.js`合并为`jqwidgets.min.js`
-* `jqx.base.css、jqx.office.css`合并为`jqx.min.css`
 * css与js源文件移至src目录下，方便二次开发
 
 ## 特别说明
