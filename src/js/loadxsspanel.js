@@ -20,7 +20,7 @@ $(document).ready(function() {
         modalOpacity: 0.3,
         okButton: $('#deleteConfirm_ok'),
         cancelButton: $('#deleteConfirm_cancel'),
-        autoOpen: false,
+        autoOpen: false
     });
     $('#deleteConfirm_ok').jqxButton({
         width: '65px'
@@ -65,7 +65,7 @@ $(document).ready(function() {
         modalOpacity: 0.3,
         okButton: $('#clearConfirm_ok'),
         cancelButton: $('#clearConfirm_cancel'),
-        autoOpen: false,
+        autoOpen: false
     });
 
     $('#clearConfirm_ok').jqxButton({
@@ -110,7 +110,7 @@ $(document).ready(function() {
         modalOpacity: 0.3,
         okButton: $('#logoutConfirm_ok'),
         cancelButton: $('#logoutConfirm_cancel'),
-        autoOpen: false,
+        autoOpen: false
     });
 
     $('#logoutConfirm_ok').jqxButton({
@@ -138,7 +138,7 @@ $(document).ready(function() {
         isModal: true,
         modalOpacity: 0.3,
         okButton: $('#failed_ok'),
-        autoOpen: false,
+        autoOpen: false
     });
 
     $('#failed_ok').jqxButton({
@@ -277,10 +277,10 @@ $(document).ready(function() {
             name: 'request_date_and_time_string'
         }, {
             name: 'client'
-        }, ],
+        } ],
         id: 'request_time',
         url: urlbase + "?cmd=list",
-        root: 'data',
+        root: 'data'
     };
 
     //从接口获得数据后的处理，格式化时间与根据useragent判断客户端
@@ -309,7 +309,7 @@ $(document).ready(function() {
                 }
                 return data;
             }
-        },
+        }
     });
 
     //每行detail信息初始化
@@ -355,7 +355,7 @@ $(document).ready(function() {
                     name: 'decoded_value',
                     type: 'string',
                     map: '2'
-                }, ],
+                } ],
                 datatype: "array"
             };
             var get_source_dataAdapter = new $.jqx.dataAdapter(get_source);
@@ -383,7 +383,7 @@ $(document).ready(function() {
                     }, {
                         text: '解码',
                         datafield: 'decoded_value'
-                    },
+                    }
 
                 ] : [{
                     text: '键',
@@ -391,7 +391,7 @@ $(document).ready(function() {
                 }, {
                     text: '值',
                     datafield: 'value'
-                }, ]
+                } ]
             });
 
             //POST表
@@ -423,7 +423,7 @@ $(document).ready(function() {
                         name: 'decoded_value',
                         type: 'string',
                         map: '2'
-                    },
+                    }
 
                 ],
                 datatype: "array"
@@ -454,7 +454,7 @@ $(document).ready(function() {
                     }, {
                         text: '解码',
                         datafield: 'decoded_value'
-                    },
+                    }
 
                 ] : [{
                     text: '键',
@@ -462,7 +462,7 @@ $(document).ready(function() {
                 }, {
                     text: '值',
                     datafield: 'value'
-                }, ]
+                } ]
             });
 
             //COOKIE表
@@ -492,7 +492,7 @@ $(document).ready(function() {
                     name: 'decoded_value',
                     type: 'string',
                     map: '2'
-                }, ],
+                } ],
                 datatype: "array"
             };
             var cookie_source_dataAdapter = new $.jqx.dataAdapter(cookie_source);
@@ -520,13 +520,13 @@ $(document).ready(function() {
                 }, {
                     text: '解码',
                     datafield: 'decoded_value'
-                }, ] : [{
+                } ] : [{
                     text: '键',
                     datafield: 'key'
                 }, {
                     text: '值',
                     datafield: 'value'
-                }, ]
+                } ]
             });
 
             //HTTP Headers表
@@ -547,7 +547,7 @@ $(document).ready(function() {
                         name: 'value',
                         type: 'string',
                         map: '1'
-                    },
+                    }
 
                 ],
                 datatype: "array"
@@ -575,7 +575,7 @@ $(document).ready(function() {
                 }, {
                     text: '值',
                     datafield: 'value'
-                }, ]
+                } ]
             });
 
             //其他信息

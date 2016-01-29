@@ -35,10 +35,10 @@ $(document).ready(function() {
             name: "js_name_abbr"
         }, {
             name: "js_description_abbr"
-        }, ],
+        } ],
 
         id: "js_name",
-        url: urlbase + "?js_template_cmd=list",
+        url: urlbase + "?js_template_cmd=list"
     };
 
     jsTemplate_dataAdapter = new $.jqx.dataAdapter(jsTemplate_source, {
@@ -195,17 +195,16 @@ $(document).ready(function() {
                         }
 
                     },
-                    complete: function(XMLHttpRequest, status) {　　　　
-                        if (status == 'timeout')　　　 {
+                    complete: function(XMLHttpRequest, status) {
+                        if (status == 'timeout') {
                             $('#failedWindow').jqxWindow('open');
                             $("#failedWindow").addClass('animated');
                         } else if (status == "parsererror") {
-                            window.location.href = "login.php";　
-                        }　
+                            window.location.href = "login.php";
+                        }
                     }
                 });
             }
-
         }
     });
 

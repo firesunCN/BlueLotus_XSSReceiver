@@ -107,11 +107,11 @@ function generate_password($length = 32) {
     <head>
         <meta charset="utf-8" />
 		<title>登录</title>
-		<link rel="stylesheet" href='static/css/font-awesome.css' type="text/css" >
-		<link rel="stylesheet" href="static/css/login.css" type="text/css" />
+		<link rel="stylesheet" href='static/css/font-awesome.min.css' type="text/css" >
+		<link rel="stylesheet" href="static/css/login.min.css" type="text/css" />
 		
         <script type="text/javascript" src="static/js/jquery.min.js" ></script>
-        <script type="text/javascript" src="static/js/login.js" ></script>
+        <script type="text/javascript" src="static/js/login.min.js" ></script>
 		<?php
 if ($is_pass_wrong)
     echo '<script type="text/javascript" src="static/js/pass_is_wrong.js" ></script>';

@@ -31,10 +31,10 @@ $(document).ready(function() {
             name: "js_name_abbr"
         }, {
             name: "js_description_abbr"
-        }, ],
+        } ],
 
         id: "js_name",
-        url: urlbase + "?my_js_cmd=list",
+        url: urlbase + "?my_js_cmd=list"
     };
 
     var myJS_dataAdapter = new $.jqx.dataAdapter(myJS_source, {
@@ -515,12 +515,12 @@ $(document).ready(function() {
         isModal: true,
         modalOpacity: 0.3,
         autoOpen: false,
-        title: "XSS'OR js编码工具",
+        title: "XSS'OR js编码工具"
     });
 
     $("#Ww_B_0_textarea").jqxTextArea({
         height: 220,
-        width: 270,
+        width: 270
     });
 
     $("#rwb_b2").jqxButton();

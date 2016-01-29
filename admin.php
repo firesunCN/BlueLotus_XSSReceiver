@@ -10,11 +10,10 @@ require("auth.php");
 
     <title>控制面板</title>
     <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/main.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/notification.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/jqx.base.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/jqx.office.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/main.min.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/notification.min.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/jqx.min.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/animate.min.css" type="text/css" />
 
 
 
@@ -369,42 +368,22 @@ require("auth.php");
 	<script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
     
-	<script type="text/javascript" src="static/js/beautify.js"></script>
+	<script type="text/javascript" src="static/js/beautify.min.js"></script>
 	<script type="text/javascript" src="static/js/ZeroClipboard.min.js"></script>
 	<script type="text/javascript" src="static/js/ace.js"></script>
-	<script type="text/javascript" src="static/js/jsmin.js"></script>
-	<script type="text/javascript" src="static/js/js_encode.js"></script>
+	<script type="text/javascript" src="static/js/jsmin.min.js"></script>
+	<script type="text/javascript" src="static/js/js_encode.min.js"></script>
 
 	
-    <script type="text/javascript" src="static/js/jqxcore.js"></script>
-    <script type="text/javascript" src="static/js/jqxdata.js"></script>
-    <script type="text/javascript" src="static/js/jqxbuttons.js"></script>
-    <script type="text/javascript" src="static/js/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="static/js/jqxmenu.js"></script>
-    <script type="text/javascript" src="static/js/jqxgrid.js"></script>
-    <script type="text/javascript" src="static/js/jqxgrid.selection.js"></script>
-    <script type="text/javascript" src="static/js/jqxgrid.edit.js"></script>
-    <script type="text/javascript" src="static/js/jqxgrid.sort.js"></script>
-    <script type="text/javascript" src="static/js/jqxtabs.js"></script>
-    <script type="text/javascript" src="static/js/jqxgrid.columnsresize.js"></script>
-    <script type="text/javascript" src="static/js/jqxwindow.js"></script>
-    <script type="text/javascript" src="static/js/jqxdropdownlist.js"></script>
-    <script type="text/javascript" src="static/js/jqxgrid.pager.js"></script>
-    <script type="text/javascript" src="static/js/jqxlistbox.js"></script>
-    <script type="text/javascript" src="static/js/jqxgrid.filter.js"></script>
-    <script type="text/javascript" src="static/js/jqxsplitter.js"></script>
-	<script type="text/javascript" src="static/js/jqxtoolbar.js"></script>
-	<script type="text/javascript" src="static/js/jqxcombobox.js"></script>
-	<script type="text/javascript" src="static/js/jqxinput.js"></script>
-	<script type="text/javascript" src="static/js/jqxtextarea.js"></script>
+    <script type="text/javascript" src="static/js/jqwidgets.min.js"></script>
 	
-    <script type="text/javascript" src="static/js/getTheme.js"></script>
-    <script type="text/javascript" src="static/js/localization.js"></script>
+    <script type="text/javascript" src="static/js/getTheme.min.js"></script>
+    <script type="text/javascript" src="static/js/localization.min.js"></script>
 
-    <script type="text/javascript" src="static/js/loadxsspanel.js"></script>
-    <script type="text/javascript" src="static/js/loadjstemplate.js"></script>
-	<script type="text/javascript" src="static/js/loadmyjs.js"></script>
-    <script type="text/javascript" src="static/js/notification.js"></script>
+    <script type="text/javascript" src="static/js/loadxsspanel.min.js"></script>
+    <script type="text/javascript" src="static/js/loadjstemplate.min.js"></script>
+	<script type="text/javascript" src="static/js/loadmyjs.min.js"></script>
+    <script type="text/javascript" src="static/js/notification.min.js"></script>
 	
 </body>
 

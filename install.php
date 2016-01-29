@@ -206,7 +206,7 @@ function display_header() {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="robots" content="noindex,nofollow" />
 	<title>安装</title>
-	<link rel="stylesheet" href="static/css/install.css" type="text/css" />
+	<link rel="stylesheet" href="static/css/install.min.css" type="text/css" />
 </head>
 <body class="core-ui">
 <p id="logo">

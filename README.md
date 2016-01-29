@@ -2,7 +2,7 @@
 如从旧版本升级，请务必先阅读Readme
 
 ## 平台说明
-本平台设计理念: 简单配置即可使用，无需数据库，无需其他组件支持，可直接在php虚拟空间使用，由于SAE空间限制了IO读写，需要做相应的修改，将文件写入memcache或者kvdb
+本平台设计理念: 简单配置即可使用，无需数据库，无需其他组件支持，可直接在php虚拟空间使用，由于SAE空间限制了IO读写，需要做相应的修改，将文件写入memcache或者kvdb或者Storage（to do）
 ![](./guide/mainpanel.png)
 
 ##安装说明
@@ -155,17 +155,25 @@ define('MAIL_RECV', "xxxx@xxxx.com");//接收通知的邮件地址
 6. 升级完成
 
 ## TODO
+* 支持SAE
 * 多用户（SQL版本）
 * WebSocket方式通知
+
+## src目录说明
+
+* static/js与static/css下的js与css文件已压缩
+* 其中`jqxcore.js、jqxdata.js、jqxgrid.js、jqxgrid.columnsresize.js、jqxgrid.filter.js、jqxgrid.edit.js、jqxgrid.pager.js、jqxgrid.selection.js、jqxgrid.sort.js、jqxbuttons.js、jqxcombobox.js、jqxdropdownlist.js、jqxinput.js、jqxlistbox.js、jqxmenu.js、jqxscrollbar.js、jqxsplitter.js、jqxtabs.js、jqxtextarea.js、jqxtoolbar.js、jqxwindow.js`合并为`jqwidgets.min.js`
+* `jqx.base.css、jqx.office.css`合并为`jqx.min.css`
+* css与js源文件移至src目录下，方便二次开发
 
 ## 特别说明
 * 前端使用[Bootstrap](http://getbootstrap.com/)与[jQWidgets](http://www.jqwidgets.com/)开发，（原来用kendo UI，受限于商业许可，改用jQWidgets），`you can use jQWidgets for free under the Creative Commons Attribution-NonCommercial 3.0 License`, 但是不可用于商业用途，如需用于商业用途请购买授权
 * 为实现jqxgrid不支持的功能，如固定表格高度实现row高度自动调节，修改了jQWidgets部分代码，具体修改部分可查看diff文件夹
-* 为方便开发与调试，未合并压缩js与css，待最终版发布后合并
 * 使用纯真ip库的函数基于Discuz X3.1 function_misc.php上修改而来, 判断客户端操作系统与浏览器的脚本基于原作者@author  Jea杨写的php版本修改而来，后台整体布局借鉴Kendo UI 的demo NORTHWIND DASH
 * js代码格式化使用[js_beautify](https://github.com/beautify-web/js-beautify)库
 * js代码压缩采用jsmin.js
 * js代码编辑器采用[ace](https://ace.c9.io)
+* 安装脚本完全参考[wordpress](https://cn.wordpress.org/)的安装程序
 * **Warning: 本工具仅允许使用在CTF比赛等学习、研究场景，严禁用于非法用途**
 
 ## 意见与建议

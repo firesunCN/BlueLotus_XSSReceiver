@@ -50,7 +50,7 @@ function showNotification(newUnreadNum,lastedID,interval){
 				$("#newNotification").click(readNotification);
 				
 				$('#unreadNum').text(unreadNum);
-				$("#notifications-bottom-right").addClass('animated bounceInUp');　　　　　 
+				$("#notifications-bottom-right").addClass('animated bounceInUp');
 			}
 		}
 	});	
