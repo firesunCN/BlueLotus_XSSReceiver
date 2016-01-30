@@ -3,6 +3,7 @@ define("IN_XSS_PLATFORM", true);
 
 require_once("load.php");
 require_once("functions.php");
+require_once("dio.php");
 
 //CSP开启
 header("Content-Security-Policy: default-src 'self'; object-src 'none'; frame-src 'none'");
@@ -47,34 +48,6 @@ if (!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip] <= 5) {
     }
 } else
     $is_pass_wrong = true;
-
-function loadForbiddenIPList() {
-    $logfile = DATA_PATH . '/forbiddenIPList.dat';
-    !file_exists($logfile) && @touch($logfile);
-    $str = @file_get_contents($logfile);
-    if ($str === false)
-        return array();
-    
-    $str = decrypt($str);
-    
-    
-    if ($str != '') {
-        $result = json_decode($str, true);
-        if ($result != null)
-            return $result;
-        else
-            return array();
-    } else
-        return array();
-}
-
-function saveForbiddenIPList($forbiddenIPList) {
-    $logfile = DATA_PATH . '/forbiddenIPList.dat';
-    !file_exists($logfile) && @touch($logfile);
-    $str = json_encode($forbiddenIPList);
-    $str = encrypt($str);
-    @file_put_contents($logfile, $str);
-}
 
 /*
 生成密码
