@@ -17,6 +17,7 @@
 * 在配置前，需要赋予xss数据存储路径、js模板存储路径、我的js存储路径写权限，以及平台根目录写权限（sudo chmod 777 -R ./）
 * 完成安装，访问http://网站地址/admin.php登录后台
 * 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
+* 如不做二次开发，可直接删除根目录下diff、guide、src目录
 * 如果有权限，请开启Apache中的AllowOverride以使.htaccess生效（可选）
 	* xss数据存储路径将被设置为禁止web访问
 	* js模板存储路径、我的js存储路径将被设置为仅允许访问js文件
@@ -38,6 +39,7 @@ define('ENCRYPT_TYPE', "RC4");
 * 赋予`DATA_PATH`，`MY_JS_PATH`，`JS_TEMPLATE_PATH`对应的目录写权限
 * 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
 * 可访问admin.php登录查看记录的数据，初始登录密码bluelotus
+* 如不做二次开发，可直接删除根目录下diff、guide、src目录
 * 如果有权限，请开启Apache中的AllowOverride以使.htaccess生效（可选）
 	* DATA_PATH被设置为禁止web访问
 	* MY_JS_PATH与JS_TEMPLATE_PATH被设置为仅允许访问js文件
