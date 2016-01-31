@@ -20,7 +20,7 @@ define('ENCRYPT_TYPE', "RC4");
 * PASS为登录密码，可用`php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"`生成密码hash
 * 上传所有文件至SAE
 * 在SAE的控制面板->存储与CDN服务->Storage，新建一个Bucket，配置如下（公有，名字为bluelotus）
-![](./guide/sae.png)
+![](https://raw.githubusercontent.com/firesunCN/BlueLotus_XSSReceiver/SAE/guide/sae.PNG)
 * Bucket名字可自定义，需要与config.php里STORAGE_BUCKET_NAME保持一致
 * 当有请求访问/index.php?a=xxx&b=xxxx，所有携带数据包括get，post，cookie，httpheaders，客户端信息都会记录
 
@@ -30,7 +30,7 @@ define('ENCRYPT_TYPE', "RC4");
 ## js地址
 * js保存在Storage内，默认地址为http://(app name)-(bucket name).stor.sinaapp.com/myjs/xxx.js，或者http://(app name)-(bucket name).stor.sinaapp.com/template/xxx.js
 * 可以直接使用UI上的复制js地址，或者生成payload功能，直接得到js的地址
-![](./guide/js.png)
+![](https://raw.githubusercontent.com/firesunCN/BlueLotus_XSSReceiver/SAE/guide/js.PNG)
 
 ## 其他说明
 * 详细说明请查看master分支的README.md
