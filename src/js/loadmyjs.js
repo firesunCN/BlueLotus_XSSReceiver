@@ -348,8 +348,7 @@ $(document).ready(function() {
                         var index = $("#myJS_listbox").jqxListBox('getSelectedIndex');
                         if (index >= 0) {
                             var datarecord = myJS_dataAdapter.records[index];
-                            var pos = window.location.href.lastIndexOf("/");
-                            var url = window.location.href.substr(0, pos + 1) + datarecord.js_uri;
+                            var url = decodeURIComponent(datarecord.js_uri);
 
                             $("#Ww_B_0_textarea").val('<script src="' + url + '"></script>');
                             $('#xssorWindow').jqxWindow('open');
@@ -370,8 +369,7 @@ $(document).ready(function() {
                         if (index >= 0) {
                             var clipboard = event.clipboardData;
                             var datarecord = myJS_dataAdapter.records[index];
-                            var pos = window.location.href.lastIndexOf("/");
-                            var url = window.location.href.substr(0, pos + 1) + datarecord.js_uri;
+                            var url = decodeURIComponent(datarecord.js_uri);
                             clipboard.setData("text/plain", url);
                             //alert("JS地址已复制至剪切板\n" + url);
                         } else {

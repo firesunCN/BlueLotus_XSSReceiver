@@ -58,9 +58,3 @@ if ($decoded_cookie_data)
 $info['keepsession'] = isKeepSession($info) ? true : false;
 
 save_xss_record(json_encode($info), $request_time);
-
-//发送邮件通知
-if (MAIL_ENABLE) {
-    require_once("mail.php");
-    @send_mail($info);
-}

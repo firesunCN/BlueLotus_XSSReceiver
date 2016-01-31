@@ -13,13 +13,5 @@ define("ENCRYPT_TYPE", "RC4"); //加密方法（AES或RC4）
 define("KEEP_SESSION", true); //是否启用KEEP_SESSION功能，需要外部定时访问keepsession.php
 define("IPDATA_PATH", "qqwry.dat"); //ip归属地数据库地址
 
-/*邮件通知相关配置*/
-
-define("MAIL_ENABLE", false); //开启邮件通知
-define("SMTP_SERVER", "smtp.xxx.com"); //smtp服务器
-define("SMTP_PORT", 465); //端口
-define("SMTP_SECURE", "ssl");
-define("MAIL_USER", "xxx@xxx.com"); //发件人用户名
-define("MAIL_PASS", "xxxxxx"); //发件人密码
-define("MAIL_FROM", "xxx@xxx.com"); //发件人地址（需真实，不可伪造）
-define("MAIL_RECV", "xxxx@xxxx.com"); //接收通知的邮件地址
+/*SAE相关配置*/
+define('STORAGE_BUCKET_NAME', 'bluelotus');//SAE Storage的Bucket Name

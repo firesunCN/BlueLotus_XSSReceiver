@@ -10,52 +10,35 @@ require_once("functions.php");
 require_once("dio.php");
 
 if (KEEP_SESSION) {
-    //利用非阻塞的flock实现单例运行
-    $pid = fopen(DATA_PATH . '/check.pid', "w");
-    if (!$pid)
-        exit();
-    
-    if (flock($pid, LOCK_EX | LOCK_NB)) {
-        $files = glob(DATA_PATH . '/*.php');
-        foreach ($files as $file) {
-            $filename = basename($file, ".php");
-            $info     = load_xss_record($filename);
-            if ($info['keepsession'] === true) {
-                $url    = getLocation($info);
-                $cookie = getCookie($info);
+    $files = sae_glob( DATA_PATH, 'htm' );
+    foreach ($files as $file) {
+        $filename = basename($file, ".htm");
+        $info     = load_xss_record($filename);
+        if ($info['keepsession'] === true) {
+            $url    = getLocation($info);
+            $cookie = getCookie($info);
                 
-                $useragent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2535.0 Safari/537.36";
-                if (isset($info['headers_data']['User-Agent']))
-                    $useragent = $info['headers_data']['User-Agent'];
-                
-                $ip = $info['user_IP'];
-                if ($url != "" && $cookie != "") {
-                    $ch       = curl_init();
-                    $header[] = 'User-Agent: ' . $useragent;
-                    $header[] = 'Cookie: ' . $cookie;
-                    $header[] = 'X-Forwarded-For: ' . $ip;
+            $useragent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2535.0 Safari/537.36";
+            if (isset($info['headers_data']['User-Agent']))
+                $useragent = $info['headers_data']['User-Agent'];
+
+            if ($url != "" && $cookie != "") {
+                $ch       = curl_init();
+                $header[] = 'User-Agent: ' . $useragent;
+                $header[] = 'Cookie: ' . $cookie;
                     
-                    curl_setopt($ch, CURLOPT_URL, $url);
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-                    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-                    //https不校验证书，按需开启吧
-                    //curl_setopt ( $curl_handle, CURLOPT_SSL_VERIFYHOST, 0 );
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+                //https不校验证书，按需开启吧
+                //curl_setopt ( $curl_handle, CURLOPT_SSL_VERIFYHOST, 0 );
                     
-                    curl_exec($ch);
-                    curl_close($ch);
-                }
+                curl_exec($ch);
+                curl_close($ch);
             }
-            
         }
-        
-        //可加上sleep来防止keepsession被ddos	
-        //sleep(10);
-        flock($pid, LOCK_UN);
     }
-    
-    fclose($pid);
-    
 }
 
 function getCookie($info)
