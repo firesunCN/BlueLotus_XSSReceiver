@@ -58,7 +58,7 @@ function getCookie($info)
     else if (isset($info['cookie_data']['cookie']) && $info['cookie_data']['cookie'] != "")
         $cookie = $info['cookie_data']['cookie'];
     
-    return htmlspecialchars_decode(stripslashes($cookie), ENT_QUOTES);
+    return htmlspecialchars_decode($cookie, ENT_QUOTES);
     
 }
 
@@ -81,5 +81,5 @@ function getLocation($info)
     else if (isset($info['headers_data']['Referer']) && $info['headers_data']['Referer'] != "")
         $location = $info['headers_data']['Referer'];
     
-    return htmlspecialchars_decode(stripslashes($location), ENT_QUOTES);
+    return htmlspecialchars_decode($location, ENT_QUOTES);
 }

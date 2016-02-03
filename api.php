@@ -55,6 +55,11 @@ else if ( isset( $_GET['js_template_cmd'] ) ) {
         //添加js模板
         case 'add':
             if ( isset( $_POST['name'] ) && isset( $_POST['desc'] ) && isset( $_POST['content'] ) ) {
+                if (get_magic_quotes_gpc()) {
+                    $_POST['name'] = stripslashes($_POST['name']);
+                    $_POST['desc'] = stripslashes($_POST['desc']);
+                    $_POST['content'] = stripslashes($_POST['content']);
+                }
                 $result = save_js_desc( JS_TEMPLATE_PATH, $_POST['desc'], $_POST['name'] ) 
                 && save_js_content( JS_TEMPLATE_PATH, $_POST['content'], $_POST['name'] );
                 echo json_encode( $result );
@@ -67,6 +72,12 @@ else if ( isset( $_GET['js_template_cmd'] ) ) {
         //修改js模板
         case 'modify':
             if ( isset( $_POST['old_name'] ) && isset( $_POST['name'] ) && isset( $_POST['desc'] ) && isset( $_POST['content'] ) ) {
+                if (get_magic_quotes_gpc()) {
+                    $_POST['old_name'] = stripslashes($_POST['old_name']);
+                    $_POST['name'] = stripslashes($_POST['name']);
+                    $_POST['desc'] = stripslashes($_POST['desc']);
+                    $_POST['content'] = stripslashes($_POST['content']);
+                }
                 $result = true;
                 if ( $_POST['old_name'] != $_POST['name'] )
                     $result = delete_js( JS_TEMPLATE_PATH, $_POST['old_name'] );
@@ -85,16 +96,22 @@ else if ( isset( $_GET['js_template_cmd'] ) ) {
         
         //获取某一js模板的内容
         case 'get':
-            if ( isset( $_GET['name'] ) )
+            if ( isset( $_GET['name'] ) ) {
+                if (get_magic_quotes_gpc())
+                    $_POST['name'] = stripslashes($_POST['name']);
                 echo json_encode( load_js_content( JS_TEMPLATE_PATH, $_GET['name'] ) );
+            }
             else
                 echo json_encode( false );
             break;
         
         //删除js模板
         case 'del':
-            if ( isset( $_GET['name'] ) )
+            if ( isset( $_GET['name'] ) ) {
+                if (get_magic_quotes_gpc())
+                    $_POST['name'] = stripslashes($_POST['name']);
                 echo json_encode( delete_js( JS_TEMPLATE_PATH, $_GET['name'] ) );
+            } 
             else
                 echo json_encode( false );
             break;
@@ -119,6 +136,11 @@ else if ( isset( $_GET['my_js_cmd'] ) ) {
         //添加js模板
         case 'add':
             if ( isset( $_POST['name'] ) && isset( $_POST['desc'] ) && isset( $_POST['content'] ) ) {
+                if (get_magic_quotes_gpc()) {
+                    $_POST['name'] = stripslashes($_POST['name']);
+                    $_POST['desc'] = stripslashes($_POST['desc']);
+                    $_POST['content'] = stripslashes($_POST['content']);
+                }
                 $result = save_js_desc( MY_JS_PATH, $_POST['desc'], $_POST['name'] )
                 && save_js_content( MY_JS_PATH, $_POST['content'], $_POST['name'] );
                 echo json_encode( $result );
@@ -131,6 +153,12 @@ else if ( isset( $_GET['my_js_cmd'] ) ) {
         //修改js模板
         case 'modify':
             if ( isset( $_POST['old_name'] ) && isset( $_POST['name'] ) && isset( $_POST['desc'] ) && isset( $_POST['content'] ) ) {
+                if (get_magic_quotes_gpc()) {
+                    $_POST['old_name'] = stripslashes($_POST['old_name']);
+                    $_POST['name'] = stripslashes($_POST['name']);
+                    $_POST['desc'] = stripslashes($_POST['desc']);
+                    $_POST['content'] = stripslashes($_POST['content']);
+                }
                 $result = true;
                 if ( $_POST['old_name'] != $_POST['name'] )
                     $result = delete_js( MY_JS_PATH, $_POST['old_name'] );
@@ -147,16 +175,22 @@ else if ( isset( $_GET['my_js_cmd'] ) ) {
         
         //获取某一js模板的内容
         case 'get':
-            if ( isset( $_GET['name'] ) )
+            if ( isset( $_GET['name'] ) ) {
+                if (get_magic_quotes_gpc())
+                    $_POST['name'] = stripslashes($_POST['name']);
                 echo json_encode( load_js_content( MY_JS_PATH, $_GET['name'] ) );
+            }
             else
                 echo json_encode( false );
             break;
         
         //删除js模板
         case 'del':
-            if ( isset( $_GET['name'] ) )
+            if ( isset( $_GET['name'] ) ) {
+                if (get_magic_quotes_gpc())
+                    $_POST['name'] = stripslashes($_POST['name']);
                 echo json_encode( delete_js( MY_JS_PATH, $_GET['name'] ) );
+            }
             else
                 echo json_encode( false );
             break;

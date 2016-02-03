@@ -51,7 +51,7 @@ function load_xss_record( $id ) {
         
         $isChange = false;
         if ( !isset( $info['location'] ) ) {
-            $info['location'] = stripStr( convertip( $info['user_IP'], IPDATA_PATH ) );
+            $info['location'] = convertip( $info['user_IP'], IPDATA_PATH );
             $isChange         = true;
         }
         
@@ -117,7 +117,7 @@ function list_xss_record_detail() {
         $isChange = false;
         //如果没有设置location，就查询qqwry.dat判断location
         if ( !isset( $info['location'] ) ) {
-            $info['location'] = stripStr( convertip( $info['user_IP'], IPDATA_PATH ) );
+            $info['location'] = convertip( $info['user_IP'], IPDATA_PATH );
             $isChange         = true;
         }
         
@@ -218,7 +218,7 @@ function list_js_name_and_desc( $path ) {
         $filename             = preg_replace( '/^.+[\\\\\\/]/', '', $file );
         $filename             = substr( $filename, 0, strlen( $filename ) - 3 );
         $item['js_name']      = $filename;
-        $item['js_name_abbr'] = stripStr( $filename );
+        $item['js_name_abbr'] = htmlspecialchars($filename, ENT_QUOTES, 'UTF-8');
         
         $result = @sae_file_get_contents( $path . '/' . $filename . '.desc' );
         $result = $result ? $result : "";
@@ -230,9 +230,9 @@ function list_js_name_and_desc( $path ) {
             $result = "加密密码不符，无法获得描述";
         
         $item['js_description']      = $result;
-        $item['js_description_abbr'] = stripStr( $result );
+        $item['js_description_abbr'] = htmlspecialchars($result, ENT_QUOTES, 'UTF-8');
         
-        //特别注意：只有js_name_abbr，js_description_abbr经过stripStr处理
+        //特别注意：只有js_name_abbr，js_description_abbr经过htmlspecialchars处理
         $list[] = $item;
         
     }

@@ -48,7 +48,7 @@ function isKeepSession($info) {
 function stripStr($str) {
     if (get_magic_quotes_gpc())
         $str = stripslashes($str);
-    return addslashes(htmlspecialchars($str, ENT_QUOTES, 'UTF-8'));
+    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
 function stripArr($arr) {
@@ -121,7 +121,7 @@ function decrypt($info) {
     return $info;
 }
 
-//基于Discuz X3.1 function_misc.php
+//基于Discuz X3.1 function_misc.php 函数已过滤，可直接输出
 function convertip($ip, $ipdatafile) {
     $ipaddr = '未知';
     if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $ip)) {
