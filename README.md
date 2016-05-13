@@ -17,7 +17,7 @@ define('ENABLE_ENCRYPT', true);
 define('ENCRYPT_PASS', "bluelotus");
 define('ENCRYPT_TYPE', "RC4");
 ```
-* PASS为登录密码，可用`php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='你的密码';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"`生成密码hash
+* PASS为登录密码，可用`php -r '$salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";$key="你的密码";$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;'`生成密码hash
 * 上传所有文件至SAE
 * 在SAE的控制面板->存储与CDN服务->Storage，新建一个Bucket，配置如下（公有，名字为bluelotus）
 ![](https://raw.githubusercontent.com/firesunCN/BlueLotus_XSSReceiver/SAE/guide/sae.PNG)
