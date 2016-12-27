@@ -1,8 +1,7 @@
 <?php
+error_reporting(0);
 define("IN_XSS_PLATFORM", true);
 require_once('auth.php');
-require_once("load.php");
-require_once("functions.php");
 require_once("dio.php");
 header('Content-Type: application/json');
 

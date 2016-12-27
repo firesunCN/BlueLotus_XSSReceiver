@@ -11,6 +11,8 @@ define("ENCRYPT_ENABLE", true); //是否加密“xss记录，封禁ip列表，js
 define("ENCRYPT_PASS", "bluelotus"); //加密密码
 define("ENCRYPT_TYPE", "RC4"); //加密方法（AES或RC4）
 define("KEEP_SESSION", true); //是否启用KEEP_SESSION功能，需要外部定时访问keepsession.php
+define("ADMIN_IP_CHECK_ENABLE", true);//是否启用管理员ip认证，启用后，当xss平台发现ip变化，将会踢出管理员要求重新登录，如果发现经常异常退出控制面板，请关闭此项认证
+define("XFF_ENABLE", false);//是否使用HTTP_X_FORWARDED_FOR的地址来代替REMOTE_ADDR，当且仅当存在反代的情况下才须开启，开启须谨慎！
 define("IPDATA_PATH", "qqwry.dat"); //ip归属地数据库地址
 
 /*邮件通知相关配置*/

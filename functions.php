@@ -121,6 +121,27 @@ function decrypt($info) {
     return $info;
 }
 
+//获得访问者真实ip
+function getRealIP(){
+    $ip="unknown";
+    if (XFF_ENABLE) {
+        foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_FORWARDED_FOR', 'HTTP_VIA', 'HTTP_FROM', 'REMOTE_ADDR') as $v) {
+            if (isset($_SERVER[$v])) {
+                if (! preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $_SERVER[$v])) {
+                    continue;
+                }
+                $ip = $_SERVER[$v];
+				break;
+            }
+        }
+    }
+    else {
+        if ( isset($_SERVER['REMOTE_ADDR']) )
+            $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
+
 //基于Discuz X3.1 function_misc.php 函数已过滤，可直接输出
 function convertip($ip, $ipdatafile) {
     $ipaddr = '未知';

@@ -2,7 +2,6 @@
 if ( !defined('IN_XSS_PLATFORM') ) {
     exit('Access Denied');
 }
-require_once("load.php");
 require_once("functions.php");
 
 //时间戳的正则表达式

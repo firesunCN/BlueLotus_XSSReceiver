@@ -1,7 +1,6 @@
 <?php
 define("IN_XSS_PLATFORM", true);
 
-require_once("load.php");
 require_once("functions.php");
 require_once("dio.php");
 
@@ -23,7 +22,7 @@ if (isset($_SESSION['isLogin']) && $_SESSION['isLogin'] === true) {
 
 //判断ip是否在封禁列表中
 $forbiddenIPList = loadForbiddenIPList();
-$ip              = $_SERVER['REMOTE_ADDR'];
+$ip              = getRealIP();
 $is_pass_wrong   = false;
 if (!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip] <= 5) {
     if (isset($_POST['password']) && $_POST['password'] != "") {

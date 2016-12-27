@@ -3,20 +3,19 @@ define("IN_XSS_PLATFORM", true);
 ignore_user_abort(true);
 error_reporting(0);
 
-//sometimes we only need "referfer".
+//sometimes we only need "referer".
 
 /*
 if(count($_GET)==0&&count($_POST)==0&&count($_COOKIE)==0)
 exit();
 */
 header("Access-Control-Allow-Origin:*");
-require_once("load.php");
 require_once("functions.php");
 require_once("dio.php");
 
 $info = array();
 
-$user_IP        = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "unknown";
+$user_IP        = getRealIP();
 $user_port      = isset($_SERVER['REMOTE_PORT']) ? $_SERVER['REMOTE_PORT'] : "unknown";
 $protocol       = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : "unknown";
 $request_method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : "unknown";

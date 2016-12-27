@@ -1,6 +1,6 @@
 <?php
 define("IN_XSS_PLATFORM", true);
-require("auth.php");
+require_once("auth.php");
 ?>
 <!DOCTYPE html>
 <html>
