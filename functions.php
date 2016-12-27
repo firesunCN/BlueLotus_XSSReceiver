@@ -143,7 +143,7 @@ function getRealIP(){
 }
 
 //基于Discuz X3.1 function_misc.php 函数已过滤，可直接输出
-function convertip($ip, $ipdatafile) {
+function convertIP($ip, $ipdatafile) {
     $ipaddr = '未知';
     if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $ip)) {
         $iparray = explode('.', $ip);
