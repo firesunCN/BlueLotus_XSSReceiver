@@ -9,7 +9,7 @@
 
 ##安装说明
 ###自动安装
-* 安装http server与php5环境（ubuntu: sudo apt-get install apache2 php5）
+* 安装http server与php环境（ubuntu: sudo apt-get install apache2 php5 或 sudo apt-get install apache2 php7.0 libapache2-mod-php7.0）
 * 上传所有文件至空间根目录
 * 访问http://网站地址/
  
