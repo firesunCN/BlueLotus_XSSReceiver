@@ -31,6 +31,4 @@ if ( ADMIN_IP_CHECK_ENABLE && !(isset($_SESSION['user_IP']) && $_SESSION['user_I
 }
 
 //开启CSP
-header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'none'");
-header("X-Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src 'none'");
-header("X-WebKit-CSP: default-src 'self'; style-src 'self' 'unsafe-inline';img-src 'self' data:; frame-src 'none'");
+require_once("waf.php");

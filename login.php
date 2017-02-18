@@ -5,9 +5,7 @@ require_once("functions.php");
 require_once("dio.php");
 
 //CSP开启
-header("Content-Security-Policy: default-src 'self'; object-src 'none'; frame-src 'none'");
-header("X-Content-Security-Policy: default-src 'self'; object-src 'none'; frame-src 'none'");
-header("X-WebKit-CSP: default-src 'self'; object-src 'none'; frame-src 'none'");
+require_once("waf.php");
 
 //设置httponly
 ini_set("session.cookie_httponly", 1);
@@ -50,7 +48,9 @@ if (!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip] <= 5) {
 
 /*
 生成密码
-php -r "$salt='!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';$key='bluelotus';$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;"
+
+php -r '$salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";$key="你的密码";$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;'
+
 */
 function checkPassword($p) {
     if (isset($_POST['firesunCheck']) && isset($_SESSION['firesunCheck']) && $_SESSION['firesunCheck'] != "" && $_POST['firesunCheck'] === $_SESSION['firesunCheck']) {

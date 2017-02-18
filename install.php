@@ -5,9 +5,7 @@ ignore_user_abort(true);
 //检测是否已经安装
 if ( file_exists('config.php') ) {
     display_header();
-    
-    @unlink($_SERVER['SCRIPT_FILENAME']);
-    @unlink('config-sample.php');
+    delTempFiles();
     die( '<h1>已安装</h1><p>请勿重复安装！</p><p class="step"><a href="login.php" class="button button-large">登录</a></p></body></html>' );
 }
 
@@ -181,12 +179,11 @@ CONFIG;
         if ( $error === false ) {
             
             //重加密记录
-            modify_js_desc($my_js_path,true,'bluelotus','RC4',$encrypt_enable,$encrypt_pass, $encrypt_type);
-            modify_js_desc($js_template_path,true,'bluelotus','RC4',$encrypt_enable,$encrypt_pass, $encrypt_type);
+            modifyJsDesc($my_js_path,true,'bluelotus','RC4',$encrypt_enable,$encrypt_pass, $encrypt_type);
+            modifyJsDesc($js_template_path,true,'bluelotus','RC4',$encrypt_enable,$encrypt_pass, $encrypt_type);
             
             //安装完成，自杀
-            @unlink($_SERVER['SCRIPT_FILENAME']);
-            @unlink('config-sample.php');
+            delTempFiles();
             
 ?>
 
@@ -426,7 +423,7 @@ function stripStr($str) {
 }
 
 //js描述重加密
-function modify_js_desc($path,$old_encrypt_enable,$old_encrypt_pass,$old_encrypt_type,$new_encrypt_enable,$new_encrypt_pass, $new_encrypt_type) {
+function modifyJsDesc($path,$old_encrypt_enable,$old_encrypt_pass,$old_encrypt_type,$new_encrypt_enable,$new_encrypt_pass, $new_encrypt_type) {
     $files = glob($path . '/*.js');
     foreach ($files as $file){
         //由于可能有中文名,故使用正则来提取文件名
@@ -483,4 +480,24 @@ function decrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) {
     return $info;
 }
 
+//删除目录及目录下所有文件
+function delTree($dir) {
+    $files = array_diff(scandir($dir), array('.','..'));
+    foreach ($files as $file) {
+        (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+    }
+    return rmdir($dir);
+}
+
+//删除临时文件
+function delTempFiles() {
+    @unlink($_SERVER['SCRIPT_FILENAME']);
+    @unlink('config-sample.php');
+    @unlink('change_encrypt_pass.php');
+    @unlink('README.md');
+    @unlink('LICENSE');
+    @delTree('src/');
+    @delTree('diff/');
+    @delTree('guide/');
+}
 ?> 
