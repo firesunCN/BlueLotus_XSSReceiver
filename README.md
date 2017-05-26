@@ -7,8 +7,8 @@
 
 ![](./guide/mainpanel.png)
 
-##安装说明
-###自动安装
+## 安装说明
+### 自动安装
 * 安装http server与php环境（ubuntu: sudo apt-get install apache2 php5 或 sudo apt-get install apache2 php7.0 libapache2-mod-php7.0）
 * 上传所有文件至空间根目录
 * 访问http://网站地址/
@@ -24,7 +24,7 @@
 	* xss数据存储路径将被设置为禁止web访问
 	* js模板存储路径、我的js存储路径将被设置为仅允许访问js文件
 
-###手动安装
+### 手动安装
 * 安装http server与php5环境（ubuntu: sudo apt-get install apache2 php5）
 * 上传所有文件至空间根目录
 * 将config-sample.php重命名为config.php，修改config.php，指定xss数据、我的js、js模板的存放目录，以及数据是否启用加密、加密密码、与加密方法（详细说明见文件注释）
