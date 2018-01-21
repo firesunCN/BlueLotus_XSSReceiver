@@ -58,8 +58,6 @@ function checkPassword($p) {
         $salt = "!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";
         $key  = PASS;
         $key  = md5($salt . $key . $_SESSION['firesunCheck'] . $salt);
-        $key  = md5($salt . $key . $_SESSION['firesunCheck'] . $salt);
-        $key  = md5($salt . $key . $_SESSION['firesunCheck'] . $salt);
         return $key === $p;
     }
     return false;
