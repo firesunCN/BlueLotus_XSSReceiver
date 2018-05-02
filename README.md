@@ -47,6 +47,18 @@ define('ENCRYPT_TYPE', "RC4");
 	* MY_JS_PATH与JS_TEMPLATE_PATH被设置为仅允许访问js文件
 	
 ![](./guide/login.png)
+### Docker部署
+#### Build & Run
+
+```
+git clone https://github.com/firesunCN/BlueLotus_XSSReceiver.git && cd BlueLotus_XSSReceiver
+docker build -t bluelotus .
+docker run -d -p 80:80 bluelotus
+```
+
+#### Login
+
+* 访问 `http://ip/admin.php`  密码 `bluelotus`
 
 ## 目前支持功能
 * 自动判断携带数据是否base64编码，可自动解码
