@@ -1,0 +1,11 @@
+_Store
+node_modules/
+.idea
+.vscode
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
