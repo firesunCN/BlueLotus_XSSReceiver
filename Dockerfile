@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:16.04
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \

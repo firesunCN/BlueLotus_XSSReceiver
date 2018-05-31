@@ -1,0 +1,7 @@
+version: '3.0'
+services:
+  bluelotus:
+    build: .
+    restart: always
+    ports:
+      - "10080:80"
