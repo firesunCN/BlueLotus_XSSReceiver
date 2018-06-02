@@ -24,7 +24,7 @@ RUN chmod 755 /*.sh
 
 RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
 
-RUN git clone https://github.com/firesunCN/BlueLotus_XSSReceiver.git /app/tmp/ && \
+RUN git clone https://github.com/firesunCN/BlueLotus_XSSReceiver.git --depth 1 /app/tmp/ && \
 	mv /app/tmp/* /app/ && \
 	rm -fr /app/tmp/ && \
 	mv /app/config-sample.php /app/config.php && \
