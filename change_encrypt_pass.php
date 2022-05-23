@@ -21,11 +21,11 @@ exit();
  * 3. php change_encrypt_pass.php true bluelotus rc4 (现在是否加密) (新加密密码) (新加密方法)
  * 4. 升级完成
  */
-define("IN_XSS_PLATFORM", true);
-require_once("config.php");
+define('IN_XSS_PLATFORM', true);
+require_once('config.php');
 
 if( isset( $argv[1] ) ) {
-	if ($argv[1] === "update")
+	if ($argv[1] === 'update')
 		update_from_old_version($argv[2], $argv[3]);
 	else
 		change_pass($argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6]);	
@@ -33,8 +33,8 @@ if( isset( $argv[1] ) ) {
 
 function update_from_old_version($old_encrypt_enable, $old_encrypt_pass) {
     //如果从旧版本升级，就统一先切换为RC4，密码bluelotus
-    modify_ForbiddenIPList($old_encrypt_enable, $old_encrypt_pass, "AES", "true", "bluelotus", "RC4");
-    modify_xss_record($old_encrypt_enable, $old_encrypt_pass, "AES", "true", "bluelotus", "RC4");
+    modify_ForbiddenIPList($old_encrypt_enable, $old_encrypt_pass, 'AES', 'true', 'bluelotus', 'RC4');
+    modify_xss_record($old_encrypt_enable, $old_encrypt_pass, 'AES', 'true', 'bluelotus', 'RC4');
 }
 
 function change_pass($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_type, $new_encrypt_enable, $new_encrypt_pass, $new_encrypt_type) {
@@ -65,7 +65,7 @@ function modify_xss_record($old_encrypt_enable, $old_encrypt_pass, $old_encrypt_
     
     foreach ($files as $file) {
         $filename = basename($file, ".php");
-        if (preg_match("/^[0-9]{10}$/", $filename)) {
+        if (preg_match('/^[0-9]{10}$/', $filename)) {
             $logFile = dirname(__FILE__) . '/' . DATA_PATH . '/' . $filename . '.php';
             $info    = @file_get_contents($logFile);
             
@@ -110,11 +110,11 @@ function modify_js_desc($path, $old_encrypt_enable, $old_encrypt_pass, $old_encr
 
 function encrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type) {
     if ($encrypt_enable) {
-        if ($encrypt_type === "AES") {
-            require_once("aes.php");
+        if ($encrypt_type === 'AES') {
+            require_once('aes.php');
             $info = AESEncryptCtr($info, $encrypt_pass);
         } else {
-            require_once("rc4.php");
+            require_once('rc4.php');
             $info = base64_encode(rc4($info, $encrypt_pass));
         }
     } else
@@ -125,12 +125,12 @@ function encrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type) {
 
 function decrypt($info, $encrypt_enable, $encrypt_pass, $encrypt_type) {
     if ($encrypt_enable) {
-        if ($encrypt_type === "AES") {
-            require_once("aes.php");
+        if ($encrypt_type === 'AES') {
+            require_once('aes.php');
             $info = AESDecryptCtr($info, $encrypt_pass);
             
         } else {
-            require_once("rc4.php");
+            require_once('rc4.php');
             $info = rc4(base64_decode($info), $encrypt_pass);
         }
     } else

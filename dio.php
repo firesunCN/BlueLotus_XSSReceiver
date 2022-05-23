@@ -2,7 +2,7 @@
 if ( !defined('IN_XSS_PLATFORM') ) {
     exit('Access Denied');
 }
-require_once("functions.php");
+require_once('functions.php');
 
 //时间戳的正则表达式
 define('ID_REGEX', '/^[0-9]{10}$/');

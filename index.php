@@ -1,5 +1,5 @@
 <?php
-define("IN_XSS_PLATFORM", true);
+define('IN_XSS_PLATFORM', true);
 ignore_user_abort(true);
 error_reporting(0);
 
@@ -9,17 +9,17 @@ error_reporting(0);
 if(count($_GET)==0&&count($_POST)==0&&count($_COOKIE)==0)
 exit();
 */
-header("Access-Control-Allow-Origin:*");
-require_once("functions.php");
-require_once("dio.php");
+header('Access-Control-Allow-Origin: *');
+require_once('functions.php');
+require_once('dio.php');
 
 $info = array();
 
 $user_IP        = getRealIP();
-$user_port      = isset($_SERVER['REMOTE_PORT']) ? $_SERVER['REMOTE_PORT'] : "unknown";
-$protocol       = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : "unknown";
-$request_method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : "unknown";
-$request_URI    = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "unknown";
+$user_port      = isset($_SERVER['REMOTE_PORT']) ? $_SERVER['REMOTE_PORT'] : 'unknown';
+$protocol       = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'unknown';
+$request_method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'unknown';
+$request_URI    = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'unknown';
 $request_time   = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
 
 $headers_data = getallheaders();

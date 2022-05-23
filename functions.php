@@ -3,7 +3,7 @@ if (!defined('IN_XSS_PLATFORM')) {
     exit('Access Denied');
 }
 
-require_once("load.php");
+require_once('load.php');
 
 //nginx无getallheaders函数
 if (!function_exists('getallheaders')) {
@@ -22,21 +22,21 @@ function isKeepSession($info) {
     $keepsession = false;
     
     foreach ($info['get_data'] as $k => $v) {
-        if ($k === "keepsession") {
+        if ($k === 'keepsession') {
             $keepsession = ($v === "1" ? true : false);
             return $keepsession;
         }
     }
     
     foreach ($info['post_data'] as $k => $v) {
-        if ($k === "keepsession") {
+        if ($k === 'keepsession') {
             $keepsession = ($v === "1" ? true : false);
             return $keepsession;
         }
     }
     
     foreach ($info['cookie_data'] as $k => $v) {
-        if ($k === "keepsession") {
+        if ($k === 'keepsession') {
             $keepsession = ($v === "1" ? true : false);
             return $keepsession;
         }
@@ -66,7 +66,7 @@ function tryBase64Decode($arr) {
         
         $new_arr = array();
         foreach ($arr as $k => $v) {
-            $decoded_v = "";
+            $decoded_v = '';
             if (isBase64Formatted($v)) {
                 $decoded_v = base64_decode($v);
                 $isChanged = 1;
@@ -93,11 +93,11 @@ function isBase64Formatted($str) {
 
 function encrypt($info) {
     if (ENCRYPT_ENABLE) {
-        if (ENCRYPT_TYPE === "AES") {
-            require_once("aes.php");
+        if (ENCRYPT_TYPE === 'AES') {
+            require_once('aes.php');
             $info = AESEncryptCtr($info, ENCRYPT_PASS);
         } else {
-            require_once("rc4.php");
+            require_once('rc4.php');
             $info = base64_encode(rc4($info, ENCRYPT_PASS));
         }
     } else
@@ -108,12 +108,12 @@ function encrypt($info) {
 
 function decrypt($info) {
     if (ENCRYPT_ENABLE) {
-        if (ENCRYPT_TYPE === "AES") {
+        if (ENCRYPT_TYPE === 'AES') {
             require_once("aes.php");
             $info = AESDecryptCtr($info, ENCRYPT_PASS);
             
         } else {
-            require_once("rc4.php");
+            require_once('rc4.php');
             $info = rc4(base64_decode($info), ENCRYPT_PASS);
         }
     } else
@@ -145,7 +145,7 @@ function getRealIP(){
 //基于Discuz X3.1 function_misc.php 函数已过滤，可直接输出
 function convertIP($ip, $ipdatafile) {
     $ipaddr = '未知';
-    if (preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $ip)) {
+    if (preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/', $ip)) {
         $iparray = explode('.', $ip);
         if ($iparray[0] == 10 || $iparray[0] == 127 || ($iparray[0] == 192 && $iparray[1] == 168) || ($iparray[0] == 172 && ($iparray[1] >= 16 && $iparray[1] <= 31))) {
             $ipaddr = '局域网';
@@ -278,12 +278,12 @@ function convertIP($ip, $ipdatafile) {
                 }
                 fclose($fd);
                 
-                $ipAddr1 = iconv("gb18030", "utf-8//IGNORE", $ipAddr1);
+                $ipAddr1 = iconv('gb18030', "utf-8//IGNORE", $ipAddr1);
                 if ($ipAddr2) {
                     if (ord($ipAddr2{0}) == 2)
                         $ipAddr2 = "";
                     else
-                        $ipAddr2 = iconv("gb18030", "utf-8//IGNORE", $ipAddr2);
+                        $ipAddr2 = iconv('gb18030', "utf-8//IGNORE", $ipAddr2);
                 }
                 
                 if (preg_match('/http/i', $ipAddr2)) {

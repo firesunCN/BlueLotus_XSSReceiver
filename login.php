@@ -1,20 +1,20 @@
 <?php
-define("IN_XSS_PLATFORM", true);
+define('IN_XSS_PLATFORM', true);
 
-require_once("functions.php");
-require_once("dio.php");
+require_once('functions.php');
+require_once('dio.php');
 
 //CSP开启
-require_once("waf.php");
+require_once('waf.php');
 
 //设置httponly
-ini_set("session.cookie_httponly", 1);
+ini_set('session.cookie_httponly', 1);
 session_start();
 
 
 //判断是否登陆
 if (isset($_SESSION['isLogin']) && $_SESSION['isLogin'] === true) {
-    header("Location: admin.php");
+    header('Location: admin.php');
     exit();
 }
 
@@ -32,7 +32,7 @@ if (!isset($forbiddenIPList[$ip]) || $forbiddenIPList[$ip] <= 5) {
                 unset($forbiddenIPList[$ip]);
                 saveForbiddenIPList($forbiddenIPList);
             }
-            header("Location: admin.php");
+            header('Location: admin.php');
             exit();
         } else {
             if (isset($forbiddenIPList[$ip]))
@@ -53,9 +53,9 @@ php -r '$salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";$key="你的密码";$key=md5($s
 
 */
 function checkPassword($p) {
-    if (isset($_POST['firesunCheck']) && isset($_SESSION['firesunCheck']) && $_SESSION['firesunCheck'] != "" && $_POST['firesunCheck'] === $_SESSION['firesunCheck']) {
+    if (isset($_POST['firesunCheck']) && isset($_SESSION['firesunCheck']) && $_SESSION['firesunCheck'] != '' && $_POST['firesunCheck'] === $_SESSION['firesunCheck']) {
         //改了这个盐记得改login.js里的，两个要一致
-        $salt = "!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";
+        $salt = '!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl';
         $key  = PASS;
         $key  = md5($salt . $key . $_SESSION['firesunCheck'] . $salt);
         $key  = md5($salt . $key . $_SESSION['firesunCheck'] . $salt);
@@ -67,8 +67,8 @@ function checkPassword($p) {
 
 //生成挑战应答的随机值
 function generate_password($length = 32) {
-    $chars    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    $password = "";
+    $chars    = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $password = '';
     for ($i = 0; $i < $length; $i++)
         $password .= $chars[mt_rand(0, strlen($chars) - 1)];
     return $password;

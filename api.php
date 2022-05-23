@@ -1,9 +1,16 @@
 <?php
 error_reporting(0);
-define("IN_XSS_PLATFORM", true);
+define('IN_XSS_PLATFORM', true);
 require_once('auth.php');
-require_once("dio.php");
+require_once('dio.php');
 header('Content-Type: application/json');
+
+$referer_array = parse_url($_SERVER['HTTP_REFERER']); 
+//CSRF防御
+if($referer_array['host'] != $_SERVER['HTTP_HOST']) { 
+    exit('Access Denied'); 
+} 
+
 
 //与xss记录相关api
 if ( isset( $_GET['cmd'] ) ) {

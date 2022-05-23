@@ -1,5 +1,5 @@
 # XSS数据接收平台（无SQL版）
-如从旧版本升级，请务必先阅读Readme
+如从旧版本升级，请务必先阅读Readme。同时，只是一个很久以前打CTF比赛练手的项目，现在回看起来很多地方写的都不优雅，不过难得的发现过了这么多年还能使用。本项目仅供学习交流使用，不得用于任何非法用途。
 
 ## 平台说明
 * 本平台设计理念: 简单配置即可使用，无需数据库，无需其他组件支持，可直接在php虚拟空间使用
@@ -9,7 +9,7 @@
 
 ##安装说明
 ###自动安装
-* 安装http server与php环境（ubuntu: sudo apt-get install apache2 php5 或 sudo apt-get install apache2 php7.0 libapache2-mod-php7.0）
+* 安装http server与php环境（ubuntu: sudo apt-get install apache2 php5 或 sudo apt-get install apache2 php7.4 libapache2-mod-php7.4）
 * 上传所有文件至空间根目录
 * 访问http://网站地址/
  
@@ -34,8 +34,8 @@ define('DATA_PATH', 'data');
 define('JS_TEMPLATE_PATH', 'template');
 define('MY_JS_PATH', 'myjs');
 define('ENABLE_ENCRYPT', true);
-define('ENCRYPT_PASS', "bluelotus");
-define('ENCRYPT_TYPE', "RC4");
+define('ENCRYPT_PASS', 'bluelotus');
+define('ENCRYPT_TYPE', 'RC4');
 ```
 * PASS为登录密码，可用`php -r '$salt="!KTMdg#^^I6Z!deIVR#SgpAI6qTN7oVl";$key="你的密码";$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);$key=md5($salt.$key.$salt);echo $key;'`生成密码hash
 * 赋予`DATA_PATH`，`MY_JS_PATH`，`JS_TEMPLATE_PATH`对应的目录写权限
@@ -101,19 +101,20 @@ define('ENCRYPT_TYPE', "RC4");
 * cookie和location参数支持base64编码，keepsession.php会自动判断，自动解码
 * 如果不设置location，将会使用HTTP Referer作为url
 * keepsession.php使用`flock($pid, LOCK_EX|LOCK_NB)`实现单例运行（由于windows下不支持无阻塞锁定，所以最好删除keepsession.php里的`set_time_limit(0)`），可自行加上sleep防止keepsession.php被恶意频繁访问
+* 请自己做好SSRF防护
 
 ## 邮件提醒
 修改config.php相关配置即可，默认关闭，开启后，每次接收到xss都会发邮件通知，需要短信提醒的直接把接收邮箱设置为手机邮箱即可
 
 ```
 define('MAIL_ENABLE', false);//开启邮件通知
-define('SMTP_SERVER', "smtp.xxx.com");//smtp服务器
+define('SMTP_SERVER', 'smtp.xxx.com');//smtp服务器
 define('SMTP_PORT', 465);//端口
-define('SMTP_SECURE', "ssl");
-define('MAIL_USER', "xxx@xxx.com");//发件人用户名
-define('MAIL_PASS', "xxxxxx");//发件人密码
-define('MAIL_FROM', "xxx@xxx.com");//发件人地址（需真实，不可伪造）
-define('MAIL_RECV', "xxxx@xxxx.com");//接收通知的邮件地址
+define('SMTP_SECURE', 'ssl');
+define('MAIL_USER', 'xxx@xxx.com');//发件人用户名
+define('MAIL_PASS', 'xxxxxx');//发件人密码
+define('MAIL_FROM', 'xxx@xxx.com');//发件人地址（需真实，不可伪造）
+define('MAIL_RECV', 'xxxx@xxxx.com');//接收通知的邮件地址
 ```
 ## 修改数据加密密码，加密方式
 

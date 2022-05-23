@@ -1,13 +1,14 @@
 <?php
-define("IN_XSS_PLATFORM", true);
+define('IN_XSS_PLATFORM', true);
+//很明显，keepsession有SSRF问题，一定要做好网络隔离，或者自己加固一下代码
 
 ignore_user_abort();
 //Windows平台最好别设成0，因为windows上lock没法实现非阻塞
 set_time_limit(0);
 
-require_once("load.php");
-require_once("functions.php");
-require_once("dio.php");
+require_once('load.php');
+require_once('functions.php');
+require_once('dio.php');
 
 if (KEEP_SESSION) {
     //利用非阻塞的flock实现单例运行
@@ -24,7 +25,7 @@ if (KEEP_SESSION) {
                 $url    = getLocation($info);
                 $cookie = getCookie($info);
                 
-                $useragent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2535.0 Safari/537.36";
+                $useragent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2535.0 Safari/537.36';
                 if (isset($info['headers_data']['User-Agent']))
                     $useragent = $info['headers_data']['User-Agent'];
                 
@@ -60,7 +61,7 @@ if (KEEP_SESSION) {
 
 function getCookie($info)
 {
-    $cookie = "";
+    $cookie = '';
     
     if (isset($info['decoded_get_data']['cookie']) && $info['decoded_get_data']['cookie'] != "")
         $cookie = $info['decoded_get_data']['cookie'];
@@ -81,7 +82,7 @@ function getCookie($info)
 
 function getLocation($info)
 {
-    $location = "";
+    $location = '';
     
     if (isset($info['decoded_get_data']['location']) && $info['decoded_get_data']['location'] != "")
         $location = $info['decoded_get_data']['location'];

@@ -1,5 +1,5 @@
 <?php
-define("IN_XSS_PLATFORM",true);
+define('IN_XSS_PLATFORM',true);
 ignore_user_abort(true);
 
 //检测是否已经安装
@@ -304,8 +304,8 @@ function display_setup_form( $error = null ) {
                 
                 
                 <select name="encrypt_type" type="text" id="encrypt_type" size="1">
-                    <option value ="RC4" <?php if($encrypt_type==="RC4") echo 'selected="selected"';?> >RC4</option>
-                    <option value ="AES" <?php if($encrypt_type!=="RC4") echo 'selected="selected"';?> >AES</option>
+                    <option value ="RC4" <?php if($encrypt_type==='RC4') echo 'selected="selected"';?> >RC4</option>
+                    <option value ="AES" <?php if($encrypt_type!=='RC4') echo 'selected="selected"';?> >AES</option>
                 </select>
                 
             </td>
@@ -447,12 +447,12 @@ function modifyJsDesc($path,$old_encrypt_enable,$old_encrypt_pass,$old_encrypt_t
 //加密
 function encrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) {
     if($encrypt_enable) {
-        if($encrypt_type==="AES") {
-            require_once("aes.php");
+        if($encrypt_type==='AES') {
+            require_once('aes.php');
             $info=AESEncryptCtr($info,$encrypt_pass);
         }
         else {
-            require_once("rc4.php");
+            require_once('rc4.php');
             $info=base64_encode( rc4($info,$encrypt_pass) );
         }    
     }
@@ -465,13 +465,13 @@ function encrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) {
 //解密
 function decrypt($info,$encrypt_enable,$encrypt_pass,$encrypt_type) {
     if($encrypt_enable) {
-        if($encrypt_type==="AES") {
-            require_once("aes.php");
+        if($encrypt_type==='AES') {
+            require_once('aes.php');
             $info=AESDecryptCtr($info,$encrypt_pass);
             
         }
         else {
-            require_once("rc4.php");
+            require_once('rc4.php');
             $info=rc4(base64_decode($info),$encrypt_pass);
         }
     }
