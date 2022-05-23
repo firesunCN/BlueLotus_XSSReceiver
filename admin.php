@@ -11,11 +11,12 @@ require_once("auth.php");
     <title>控制面板</title>
     <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/main.min.css" type="text/css" />
-    <link rel="stylesheet" href="static/css/notification.min.css" type="text/css" />	
-	<link rel="stylesheet" href="static/css/jqx.base.css" type="text/css" />
-	<link rel="stylesheet" href="static/css/jqx.office.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/notification.min.css" type="text/css" />    
+    <link rel="stylesheet" href="static/css/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/jqx.office.css" type="text/css" />
     <link rel="stylesheet" href="static/css/animate.min.css" type="text/css" />
-
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
 </head>
 
 <body>
@@ -77,7 +78,7 @@ require_once("auth.php");
                         <div class="clear"></div>
                     </div>
                     <div id="myJS">
-						<div id="myJS_splitter">
+                        <div id="myJS_splitter">
                             <div class="overflow-hidden" >
 
                                 <div class="listbox" id="myJS_listbox">
@@ -103,7 +104,7 @@ require_once("auth.php");
                                         </div>
 
                                         <div class="editor">
-											<div id="myJS_content_toolBar" ></div>
+                                            <div id="myJS_content_toolBar" ></div>
                                             <div id="myJS_content" ></div>
                                         </div>
 
@@ -149,7 +150,7 @@ require_once("auth.php");
                                         </div>
 
                                         <div class="editor">
-											<div id="jsTemplate_content_toolBar" ></div>
+                                            <div id="jsTemplate_content_toolBar" ></div>
                                             <div id="jsTemplate_content" ></div>
                                         </div>
 
@@ -170,26 +171,26 @@ require_once("auth.php");
                         <div class="clear" ></div>
                     </div>
                     <div id="about_detail" >
-						<section id="about_us_banner" style="background-position: 50% 0px;">
-							<div id="firesun" class="content">
-								<header class="header">
-									<h2>火日攻天@firesun</h2>
-									<p>蓝莲花战队负责端茶送水的<br>邮箱：<a href="mailto:firesun.cn@gmail.com">firesun.cn@gmail.com</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页：<a href="http://www.firesun.me/" target="_blank_">http://www.firesun.me/</a></p>
-								</header>
-								<span class="image"><img class="img" src="static/images/avatar.png"></span>
-							</div>
-							<div ></div >
-							<div class="content">
-								<header class="header">
-									<h2>蓝莲花战队</h2>
-									<p>源自清华大学的网安技术竞赛与研究团队<br>中国CTF竞赛成绩最突出的国际知名战队<br>
-									主页：<a href="http://www.blue-lotus.net/" target="_blank_">http://www.blue-lotus.net/</a></p>
-								</header>
-								<span class="logoimage"><img class="logoimg" src="static/images/bluelotus.png"></span>
-							</div>
-							
-						</section>
-						
+                        <section id="about_us_banner" style="background-position: 50% 0px;">
+                            <div id="firesun" class="content">
+                                <header class="header">
+                                    <h2>火日攻天@firesun</h2>
+                                    <p>蓝莲花战队负责端茶送水的<br>邮箱：<a href="mailto:firesun.cn@gmail.com">firesun.cn@gmail.com</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主页：<a href="http://www.firesun.me/" target="_blank_">http://www.firesun.me/</a></p>
+                                </header>
+                                <span class="image"><img class="img" src="static/images/avatar.png"></span>
+                            </div>
+                            <div ></div >
+                            <div class="content">
+                                <header class="header">
+                                    <h2>蓝莲花战队</h2>
+                                    <p>源自清华大学的网安技术竞赛与研究团队<br>中国CTF竞赛成绩最突出的国际知名战队<br>
+                                    主页：<a href="http://www.blue-lotus.net/" target="_blank_">http://www.blue-lotus.net/</a></p>
+                                </header>
+                                <span class="logoimage"><img class="logoimg" src="static/images/bluelotus.png"></span>
+                            </div>
+                            
+                        </section>
+                        
                     </div>
                 </div>
 
@@ -201,58 +202,58 @@ require_once("auth.php");
 
     <div id="tip-windows" class="display-none">
 
-		<div id="xssorWindow" class="windows">
+        <div id="xssorWindow" class="windows">
             <div id="Ww_B_0" class="Ww_B">
-				<div id="Ww_B_0_Left">
-					<textarea id="Ww_B_0_textarea"></textarea>
-				</div>
-				<div id="Ww_B_0_Right">
-					<input type="button" id="rwb_b2" value="→16en" />
-					<input type="button" id="rwb_b2_j" value="De" />
-					
-					<input type="radio" name="rwb_b2_c" id="rwb_b2_c1" checked="checked" />\u<input type="radio" name="rwb_b2_c" id="rwb_b2_c2" />&amp;#x;<br />
-					
-					<input type="button" id="rwb_b1" value="→10en" />  <input type="button" id="rwb_b1_j" value="De" />
-					
-					<input type="radio" name="rwb_b1_c" id="rwb_b1_c1" checked="checked" />,<input type="radio" name="rwb_b1_c" id="rwb_b1_c4" />c<input type="radio" name="rwb_b1_c" id="rwb_b1_c2" />&amp;#<input type="radio" name="rwb_b1_c" id="rwb_b1_c3" />&amp;#;
-					<br />
-					
-					<input type="button" id="rwb_b3" value="escape" /> <span style="font-size:18px">&harr;</span> 
-					<input type="button" id="rwb_b3j" value="unescape"  />
-					<br />
-					
-					<input type="button" id="rwb_b4" value="encodeURI" /> 
-					<span style="font-size:18px">&harr;</span> 
-					<input type="button" id="rwb_b4j" value="decodeURI" />
-					<br />
-					
-					<input type="button" id="rwb_b5" value="Html2JS" /> 
-					<span style="font-size:18px">&harr;</span> 
-					<input type="button" id="rwb_b5j" value="JS2Html" />
-					<br />
-					
-					<input type="button" id="rwb_b6" value="HtmlEncode" /> 
-					<span style="font-size:18px">&harr;</span> 
-					<input type="button" id="rwb_b6j" value="HtmlDecode" />
-					<br />
-					
-					<input type="button" id="rwb_b7" value="base64En" /> 
-					<span style="font-size:18px">&harr;</span> 
-					<input type="button" id="rwb_b7j" value="base64De" />
-					
-					<br /><br />
-					
-					<input type="button" id="rwb_b8" value="replace" />
-					<input type="text" name="oldC" id="oldC" size="5" /> 
-					<span style="font-size:18px">&rarr;</span> 
-					<input type="text" name="newC" id="newC" size="5" />
-					
-					<br /><br />
-					
-				</div>
-			</div>
+                <div id="Ww_B_0_Left">
+                    <textarea id="Ww_B_0_textarea"></textarea>
+                </div>
+                <div id="Ww_B_0_Right">
+                    <input type="button" id="rwb_b2" value="→16en" />
+                    <input type="button" id="rwb_b2_j" value="De" />
+                    
+                    <input type="radio" name="rwb_b2_c" id="rwb_b2_c1" checked="checked" />\u<input type="radio" name="rwb_b2_c" id="rwb_b2_c2" />&amp;#x;<br />
+                    
+                    <input type="button" id="rwb_b1" value="→10en" />  <input type="button" id="rwb_b1_j" value="De" />
+                    
+                    <input type="radio" name="rwb_b1_c" id="rwb_b1_c1" checked="checked" />,<input type="radio" name="rwb_b1_c" id="rwb_b1_c4" />c<input type="radio" name="rwb_b1_c" id="rwb_b1_c2" />&amp;#<input type="radio" name="rwb_b1_c" id="rwb_b1_c3" />&amp;#;
+                    <br />
+                    
+                    <input type="button" id="rwb_b3" value="escape" /> <span style="font-size:18px">&harr;</span> 
+                    <input type="button" id="rwb_b3j" value="unescape"  />
+                    <br />
+                    
+                    <input type="button" id="rwb_b4" value="encodeURI" /> 
+                    <span style="font-size:18px">&harr;</span> 
+                    <input type="button" id="rwb_b4j" value="decodeURI" />
+                    <br />
+                    
+                    <input type="button" id="rwb_b5" value="Html2JS" /> 
+                    <span style="font-size:18px">&harr;</span> 
+                    <input type="button" id="rwb_b5j" value="JS2Html" />
+                    <br />
+                    
+                    <input type="button" id="rwb_b6" value="HtmlEncode" /> 
+                    <span style="font-size:18px">&harr;</span> 
+                    <input type="button" id="rwb_b6j" value="HtmlDecode" />
+                    <br />
+                    
+                    <input type="button" id="rwb_b7" value="base64En" /> 
+                    <span style="font-size:18px">&harr;</span> 
+                    <input type="button" id="rwb_b7j" value="base64De" />
+                    
+                    <br /><br />
+                    
+                    <input type="button" id="rwb_b8" value="replace" />
+                    <input type="text" name="oldC" id="oldC" size="5" /> 
+                    <span style="font-size:18px">&rarr;</span> 
+                    <input type="text" name="newC" id="newC" size="5" />
+                    
+                    <br /><br />
+                    
+                </div>
+            </div>
         </div>
-	
+    
         <div id="searchWindow" class="windows">
             <div>
                 查找记录</div>
@@ -292,7 +293,7 @@ require_once("auth.php");
             </div>
         </div>
 
-		<div id="logoutConfirmWindow" class="windows">
+        <div id="logoutConfirmWindow" class="windows">
                 <div>
                     <img width="14" height="14" src="static/images/help.png" alt="" />
                     确认</div>
@@ -307,8 +308,8 @@ require_once("auth.php");
                     </div>
                     </div>
                 </div>
-		</div>
-		
+        </div>
+        
         <div id="clearConfirmWindow" class="windows">
             <div>
                 <img width="14" height="14" src="static/images/help.png" alt="" /> 确认
@@ -343,7 +344,7 @@ require_once("auth.php");
         </div>
     </div>
 
-	<!-- xss记录detail面板，注：写成script的加载速度比div快-->
+    <!-- xss记录detail面板，注：写成script的加载速度比div快-->
     <script id="xss-detail-template" type="text/template">
         <div style='margin: 10px;'>
             <ul style='margin-left: 30px;'>
@@ -362,27 +363,22 @@ require_once("auth.php");
         </div>
     </script>
 
-	<script type="text/javascript" src="static/js/jquery.min.js"></script>
-	<script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
-    
-	<script type="text/javascript" src="static/js/beautify.min.js"></script>
-	<script type="text/javascript" src="static/js/ZeroClipboard.min.js"></script>
-	<script type="text/javascript" src="static/js/ace.js"></script>
-	<script type="text/javascript" src="static/js/jsmin.min.js"></script>
-	<script type="text/javascript" src="static/js/js_encode.min.js"></script>
-
-	
+    <script type="text/javascript" src="static/js/beautify.min.js"></script>
+    <script type="text/javascript" src="static/js/ZeroClipboard.min.js"></script>
+    <script type="text/javascript" src="static/js/ace.js"></script>
+    <script type="text/javascript" src="static/js/jsmin.min.js"></script>
+    <script type="text/javascript" src="static/js/js_encode.min.js"></script>
     <script type="text/javascript" src="static/js/jqwidgets.min.js"></script>
-	
     <script type="text/javascript" src="static/js/getTheme.min.js"></script>
     <script type="text/javascript" src="static/js/localization.min.js"></script>
-
     <script type="text/javascript" src="static/js/loadxsspanel.min.js"></script>
     <script type="text/javascript" src="static/js/loadjstemplate.min.js"></script>
-	<script type="text/javascript" src="static/js/loadmyjs.min.js"></script>
+    <script type="text/javascript" src="static/js/loadmyjs.min.js"></script>
     <script type="text/javascript" src="static/js/notification.min.js"></script>
-	
+    
 </body>
 
 </html>

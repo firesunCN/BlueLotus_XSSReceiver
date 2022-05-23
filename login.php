@@ -74,17 +74,20 @@ function generate_password($length = 32) {
     return $password;
 }
 ?>
-
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
-		<title>登录</title>
-		<link rel="stylesheet" href='static/css/font-awesome.min.css' type="text/css" >
-		<link rel="stylesheet" href="static/css/login.min.css" type="text/css" />
-		
+        <title>登录</title>
+        <link rel="stylesheet" href='static/css/font-awesome.min.css' type="text/css" >
+        <link rel="stylesheet" href="static/css/login.min.css" type="text/css" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+        <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    
         <script type="text/javascript" src="static/js/jquery.min.js" ></script>
         <script type="text/javascript" src="static/js/login.min.js" ></script>
-		<?php
+        
+<?php
 if ($is_pass_wrong)
     echo '<script type="text/javascript" src="static/js/pass_is_wrong.js" ></script>';
 ?>
@@ -92,24 +95,24 @@ if ($is_pass_wrong)
     
     <body>
         <div id="loginform">
-			<div id="logo"></div>
+            <div id="logo"></div>
             <div id="mainlogin">
                 <h1>
                     登录控制面板
                 </h1>
                 <form action="" method="post">
                     <input type="password" placeholder="password" id="password" name="password" required="required">
-					<input id="firesunCheck" type="hidden" name="firesunCheck" value=<?php
+                    <input id="firesunCheck" type="hidden" name="firesunCheck" value=<?php
 $firesunCheck             = generate_password(32);
 $_SESSION['firesunCheck'] = $firesunCheck;
 echo json_encode($_SESSION['firesunCheck']);
 ?> />
                     
-					<button type="submit" id="submit" disabled="disabled">
+                    <button type="submit" id="submit" disabled="disabled">
                         <i class="fa fa-arrow-right">
                         </i>
                     </button>
-					
+                    
                 </form>
                 <div id="note">
                     <a href="#">
