@@ -180,6 +180,19 @@ define('MAIL_RECV', 'xxxx@xxxx.com');//接收通知的邮件地址
 * 安装脚本完全参考[wordpress](https://cn.wordpress.org/)的安装程序
 * **Warning: 本工具仅允许使用在CTF比赛等学习、研究场景，严禁用于非法用途**
 
+## 构建Docker镜像
+### build
+```bash
+sudo docker build -t="your_dockerhub_account/bluelotus_xssreceiver" .
+```
+
+### run
+```bash
+sudo docker run -d -p 8080:80 --name xssr your_dockerhub_account/bluelotus_xssreceiver
+```
+* 运行成功后，访问http://网站地址:8080/
+
+
 ## 意见与建议
 
 欢迎大家在使用过程中提出各种宝贵的意见和建议，以及各种bug，不胜感激
