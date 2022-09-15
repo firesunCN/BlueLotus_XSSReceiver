@@ -7,7 +7,8 @@ header('Content-Type: application/json');
 
 $referer_array = parse_url($_SERVER['HTTP_REFERER']); 
 //CSRF防御
-if($referer_array['host'] != $_SERVER['HTTP_HOST']) { 
+//$_SERVER['HTTP_HOST']有可能包含端口号，比如:abc.com:8080。需要先去除端口号再比较。
+if($referer_array['host'] != preg_replace("/:\d+$/", '', $_SERVER['HTTP_HOST'])) { 
     exit('Access Denied'); 
 } 
 
